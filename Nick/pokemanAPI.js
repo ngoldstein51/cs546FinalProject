@@ -12,3 +12,7 @@ const getPokemonByName = function(name){
 	    });
 	}
 }
+
+module.exports = {
+	getPokemonByName
+};

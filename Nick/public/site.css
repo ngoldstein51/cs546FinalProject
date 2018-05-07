@@ -6,7 +6,7 @@ html,
 body {
   /*background: #dedede;*/
   background-image: url("balls.jpg");
-  background-repeat: no-repeat;
+  background-repeat: repeat-y;
   font-family: Georgia, Cambria, "Times New Roman", Times, serif;
   font-size: 14pt;
 }
@@ -72,4 +72,14 @@ img {
   text-align: center;
   padding: 14px 16px;
   text-decoration: none;
+}
+
+.wrapper {
+  background: #ffffffde;
+  height: 1500px;
+  box-shadow: 0 0 15px 2px rgba(0,0,0,0.3);
+  border-radius: 3px;
+  width: 70%;
+  margin: auto;
+  margin-top: 100px;
 }

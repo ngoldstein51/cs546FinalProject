@@ -64,8 +64,11 @@ if(process && process.send) process.send({done: true});
 		}
 		else
 		{
-			res.render("index",{
-					title: "Log in"
+			pokemanAPI.getPokemonByName("bulbasaur");
+			res.render("index",
+			{
+				layout: "login",
+				title: "Log in"
 			});
 		}
 	});
