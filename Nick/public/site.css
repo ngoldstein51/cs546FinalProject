@@ -1,0 +1,75 @@
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  /*background: #dedede;*/
+  background-image: url("balls.jpg");
+  background-repeat: no-repeat;
+  font-family: Georgia, Cambria, "Times New Roman", Times, serif;
+  font-size: 14pt;
+}
+
+main {
+  max-width: 75%;
+  margin: auto;
+}
+
+h1 {
+  color: #222;
+  margin-bottom: 5px;
+  font-size: 2rem;
+}
+
+p {
+  font-size: 1rem;
+  line-height: 2;
+}
+
+label {
+  font-weight: bold;
+}
+
+ul {
+  list-style-type: none;
+}
+
+img {
+  margin: auto;
+  margin-left: 27%;
+  width: 45%;
+}
+
+.nav{
+  width: 75%;
+  margin: auto;
+}
+
+.topnav{
+  list-style-type: none;
+  width: 100%;
+  padding: 0;
+  overflow: hidden;
+  background-color: blue;
+  color: white;
+  height: 100%;
+  box-shadow: 0 0 10px rgba(0,0,0,1);
+}
+
+.topnav > li{
+  float: left;
+  display: block;
+}
+
+.topnav > li:hover{
+  background-color: #FFCC01;
+}
+
+.topnav > li > a{
+  display: block;
+  color: white;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+}
