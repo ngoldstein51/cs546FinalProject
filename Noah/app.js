@@ -23,6 +23,7 @@ app.listen(3000, () => {
 if(process && process.send) process.send({done: true});
 
 app.get("/", (req, res) => {
+	main();
 	user=getUser(req.cookies.AuthCookie);
 
 	if(user)
@@ -118,4 +119,18 @@ function getUser(hash)
 	}
 
 	return users[index];
+}
+
+async function main() {
+	await Users.addUser("Noah","1111",["bulb"]);
+	await Users.addUser("Nick","2222",["bulb","liz"]);
+	await Users.addUser("Pat","1234",["char"]);
+	
+	let db=await Users.getAllUsers()
+    console.log(db);
+    
+    await Users.removeAllUsers();
+
+    db=await Users.getAllUsers()
+    console.log(db);
 }

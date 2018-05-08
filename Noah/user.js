@@ -1,16 +1,16 @@
 const mongoCollections = require("./mongoCollections");
 const users = mongoCollections.users;
 
-async function addUser(id, username, password)
+async function addUser(username, password, favorites)
 {
-  if(typeof id!=='string'||typeof username!='string'|| typeof password!='string')
+  if(typeof username!=='string'|| typeof password!=='string'||typeof favorites!=='object')
     throw "addUser: Invalid arguments"
 
   let newUser=
   {
-    "id"=id,
-    "username"=username,
-    "password"=password
+    "username":username,
+    "password":password,
+    "favoites":favorites
   }
 
   const UserCollection = await users();
@@ -35,7 +35,7 @@ async function getAllUsers()
 
 async function getUser(id)
 {
-  if(arguments.length!==1||typeof id!=='string')
+  if(arguments.length!==1||typeof id!=='object')
     throw "getUser: Invalid arguments"
 
   if (!id) throw "You must provide an id to search for";
@@ -49,16 +49,26 @@ async function getUser(id)
 
 async function removeUser(id)
 {
-  if(arguments.length!==1||typeof id!=='string')
+  if(arguments.length!==1||typeof id!=='object')
     throw "removeUser: Invalid arguments"
 
   if (!id) throw "You must provide an id to search for";
 
   const UserCollection = await users();
-  const removeUser = await UserCollection.removeOne({ _id: id });
+  const removeInfo = await UserCollection.removeOne({ _id: id });
 
   if (removeInfo.removedCount === 0)
     throw "Could not remove user with id of ${id}";
+}
+
+async function removeAllUsers()
+{
+  const userList=await getAllUsers();
+
+  for(let i=0;i<userList.length;i++)
+  {
+    await removeUser(userList[i]._id);
+  }
 }
 
 
@@ -69,5 +79,6 @@ module.exports = {
     addUser,
     getAllUsers,
     getUser,
-    removeUser
+    removeUser,
+    removeAllUsers
 };
