@@ -16,6 +16,16 @@ main {
   margin: auto;
 }
 
+a {
+  color: #337ab7;
+  text-decoration: none;
+}
+
+a:hover{
+  color: #23527c;
+  text-decoration: underline;
+}
+
 h1 {
   color: #222;
   margin-bottom: 5px;

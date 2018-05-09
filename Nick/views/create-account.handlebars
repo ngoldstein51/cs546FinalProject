@@ -1,0 +1,13 @@
+<script type="text/javascript" src="/js/signup.js"></script>
+<img src="pokemans.png">
+<section class="login-padding">
+	<h1>{{title}}</h1>
+	<h2 class="error">{{error}}</h2>
+	<form action="/create-account-attempt" method="POST" id="login-form">
+			<input type="text" name="username" class="form-control" placeholder="Username">
+			<input type="password" name="password" class="form-control" placeholder="Password" id="password">
+			<input type="password" name="password" class="form-control" placeholder="Password" id="password2" onkeyup="check()">
+
+			<button type="submit" class="submit-button">Submit</button>
+	</form>
+</section>

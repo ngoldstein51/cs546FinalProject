@@ -189,6 +189,48 @@ if(process && process.send) process.send({done: true});
 		}
 	});
 
+	app.get("/create-account", (req, res) => {
+		res.render("create-account",
+			{
+				layout: "login",
+	 			title: "Create an account!"
+	 		}
+	 	);
+		res.status(403);
+	});
+
+
+
+
+	app.post("/create-account-attempt", async (req, res) => {
+		// i=0
+		// index=-1
+		// while(i<users.length)
+		// {
+		// 	if(users[i].username===req.body.username)
+		// 	{
+		// 		index=i;
+		// 		break;
+		// 	}
+		// 	i++;
+		// }
+
+		// if(index!=-1)
+		// {
+		// 	hash=users[index].hash;
+		// 	result=await bcrypt.compare(req.body.password, hash);
+		// }
+		// if(index!=-1 && result){
+		// 	res.cookie("AuthCookie",hash);
+		// 	res.redirect("home");
+		// }else{
+		// 	res.render("index",{
+		// 			title: "Log in",
+		// 			error: "Error, incorrect login info"
+		// 	});
+		// }
+	});
+
 	app.get("/logout", (req, res) => {
 	 	res.clearCookie("AuthCookie");
 	 	res.render("loggedOut",{
