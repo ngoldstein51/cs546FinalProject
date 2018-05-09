@@ -60,7 +60,7 @@ if(process && process.send) process.send({done: true});
 
 		if(user)
 		{
-			res.redirect("private");
+			res.redirect("home");
 		}
 		else
 		{
@@ -93,7 +93,7 @@ if(process && process.send) process.send({done: true});
 		}
 		if(index!=-1 && result){
 			res.cookie("AuthCookie",hash);
-			res.redirect("private");
+			res.redirect("home");
 		}else{
 			res.render("index",{
 					title: "Log in",
@@ -102,7 +102,61 @@ if(process && process.send) process.send({done: true});
 		}
 	});
 
-	app.get("/private", (req, res) => {
+	app.get("/home", (req, res) => {
+		user=getUser(req.cookies.AuthCookie)
+
+		if(!user){
+			res.render("notLoggedIn",{
+		 			title: "Sorry you are not logged in"
+		 	});
+		}else{
+			user1=Object.assign({},user);
+			delete(user1.hash);
+			res.render("userDisplay",{
+		 			title: "User info",
+		 			user: JSON.stringify(user1)
+		 	});
+			res.status(403);
+		}
+	});
+
+	app.get("/pokemon", (req, res) => {
+		user=getUser(req.cookies.AuthCookie)
+
+		if(!user){
+			res.render("notLoggedIn",{
+		 			title: "Sorry you are not logged in"
+		 	});
+		}else{
+			user1=Object.assign({},user);
+			delete(user1.hash);
+			res.render("userDisplay",{
+		 			title: "User info",
+		 			user: JSON.stringify(user1)
+		 	});
+			res.status(403);
+		}
+	});
+
+	app.get("/matchup", (req, res) => {
+		user=getUser(req.cookies.AuthCookie)
+
+		if(!user){
+			res.render("notLoggedIn",{
+		 			title: "Sorry you are not logged in"
+		 	});
+		}else{
+			user1=Object.assign({},user);
+			delete(user1.hash);
+			res.render("userDisplay",{
+		 			title: "User info",
+		 			user: JSON.stringify(user1)
+		 	});
+			res.status(403);
+		}
+	});
+
+	app.get("/forum", (req, res) => {
 		user=getUser(req.cookies.AuthCookie)
 
 		if(!user){
