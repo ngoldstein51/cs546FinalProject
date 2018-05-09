@@ -64,11 +64,22 @@ if(process && process.send) process.send({done: true});
 		}
 		else
 		{
-			pokemanAPI.getPokemonByName("bulbasaur");
+			// pokemanAPI.getPokemonByName("bulbasaur", function(error, result){
+			// 	if(error){
+			// 		//do an error
+			// 	}else{
+			// 		//render the correct pokemon screen
+					
+			// 	}
+			// });
+			// pokemanAPI.getFullPokemanList(function(error, result){
+
+			// });
+
 			res.render("index",
 			{
 				layout: "login",
-				title: "Log in"
+				title: "Welcome! Please Login"
 			});
 		}
 	});
@@ -130,11 +141,15 @@ if(process && process.send) process.send({done: true});
 		}else{
 			user1=Object.assign({},user);
 			delete(user1.hash);
-			res.render("userDisplay",{
-		 			title: "User info",
-		 			user: JSON.stringify(user1)
-		 	});
-			res.status(403);
+
+			pokemanAPI.getFullPokemanList(function(error, result){
+				res.render("pokemanList",{
+			 			title: "All Pokemon",
+			 			user: JSON.stringify(user1),
+			 			pokemon: result
+			 	});
+				res.status(403);
+			});
 		}
 	});
 
