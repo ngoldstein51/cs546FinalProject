@@ -153,6 +153,40 @@ if(process && process.send) process.send({done: true});
 		}
 	});
 
+	app.post("/pokemon/getPokemon", (req, res) => {
+		user=getUser(req.cookies.AuthCookie)
+
+		if(!user){
+			res.render("notLoggedIn",{
+		 			title: "Sorry you are not logged in"
+		 	});
+		}else{
+			user1=Object.assign({},user);
+			delete(user1.hash);
+
+			//req.params.studentId
+			pokemanAPI.getPokemonByName(req.body.pokename, function(error, result){
+				if(error){
+					//do an error
+					console.log(error);
+				}else{
+					//render the correct pokemon screen
+					console.log("It worked");
+					res.render("pokemon/pokemonView",{
+			 			title: "Pokemon :: " + result.name,
+			 			user: JSON.stringify(user1),
+			 			height: result.height,
+			 			weight: result.weight,
+			 			moves: result.moves,
+			 			sprite: result.sprite
+				 	});
+					res.status(403);
+				}
+			});
+			
+		}
+	});
+
 	app.get("/matchup", (req, res) => {
 		user=getUser(req.cookies.AuthCookie)
 
