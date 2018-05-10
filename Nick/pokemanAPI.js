@@ -58,7 +58,7 @@ const getPokemonMatchup = function(name,callback){
 	if(arguments.length!==2||typeof name!== 'string'||name===""){
 		callback("Error! Not a valid pokemon!",null);
 	}else{
-
+		//im sorry
 		typeDict={"normal":"fighting",
 		"fire":"water",
 		"fighting":"flying",
