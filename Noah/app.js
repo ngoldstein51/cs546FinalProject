@@ -128,7 +128,15 @@ async function main() {
 	
 	let db=await Users.getAllUsers()
     console.log(db);
-    
+
+    let updateFav=db[0]["favorites"];
+    updateFav.push("mew");
+    await Users.updateUserFav(db[0]["_id"], updateFav);
+
+    db=await Users.getAllUsers();
+
+	console.log(db);
+
     await Users.removeAllUsers();
 
     db=await Users.getAllUsers()
