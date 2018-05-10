@@ -117,5 +117,6 @@ module.exports = {
     getUser,
     removeUser,
     removeAllUsers,
-    updateUserFav
+    updateUserFav,
+    getUserByName
 };

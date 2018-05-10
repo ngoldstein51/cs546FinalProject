@@ -18,37 +18,37 @@ app.use(cookies());
 app.engine("handlebars",handle({defaultLayout: "main"}));
 app.set("view engine","handlebars");
 
-users=[
-{
-hash:"$2a$16$7JKSiEmoP3GNDSalogqgPu0sUbwder7CAN/5wnvCWe6xCKAKwlTD.",
-username: "masterdetective123",
-FirstName: "Sherlock",
-LastName: "Holmes",
-Profession: "Detective",
-Bio: 'Sherlock Holmes (/ˈʃɜːrlɒk ˈhoʊmz/) is a fictional private detective created by British author Sir Arthur Conan Doyle. \
-Known as a "consulting detective" in the stories, Holmes is known for a proficiency with observation, forensic science, \
-and logical reasoning that borders on the fantastic, which he employs when investigating cases for a wide variety of clients, \
-including Scotland Yard.'},
-{
-hash:"$2a$16$SsR2TGPD24nfBpyRlBzINeGU61AH0Yo/CbgfOlU1ajpjnPuiQaiDm",
-username: "lemon",
-FirstName: "Elizabeth",
-LastName: "Lemon",
-Profession: "Writer",
-Bio: 'Elizabeth Miervaldis "Liz" Lemon is the main character of the American television series 30 Rock.\
- She created and writes for the fictional comedy-sketch show The Girlie Show or TGS with Tracy Jordan.'},
-{
-hash:"$2a$16$4o0WWtrq.ZefEmEbijNCGukCezqWTqz1VWlPm/xnaLM8d3WlS5pnK",
-username:"theboywholived",
-FirstName: "Harry",
-LastName: "Potter",
-Profession: "Student",
-Bio: "Harry Potter is a series of fantasy novels written by British author J. K. Rowling.\
- The novels chronicle the life of a young wizard, Harry Potter, and his friends Hermione Granger and Ron Weasley,\
-  all of whom are students at Hogwarts School of Witchcraft and Wizardry . \
-  The main story arc concerns Harry's struggle against Lord Voldemort, a dark wizard who intends to become immortal,\
-   overthrow the wizard governing body known as the Ministry of Magic, and subjugate all wizards and Muggles."}
-];
+// users=[
+// {
+// hash:"$2a$16$7JKSiEmoP3GNDSalogqgPu0sUbwder7CAN/5wnvCWe6xCKAKwlTD.",
+// username: "masterdetective123",
+// FirstName: "Sherlock",
+// LastName: "Holmes",
+// Profession: "Detective",
+// Bio: 'Sherlock Holmes (/ˈʃɜːrlɒk ˈhoʊmz/) is a fictional private detective created by British author Sir Arthur Conan Doyle. \
+// Known as a "consulting detective" in the stories, Holmes is known for a proficiency with observation, forensic science, \
+// and logical reasoning that borders on the fantastic, which he employs when investigating cases for a wide variety of clients, \
+// including Scotland Yard.'},
+// {
+// hash:"$2a$16$SsR2TGPD24nfBpyRlBzINeGU61AH0Yo/CbgfOlU1ajpjnPuiQaiDm",
+// username: "lemon",
+// FirstName: "Elizabeth",
+// LastName: "Lemon",
+// Profession: "Writer",
+// Bio: 'Elizabeth Miervaldis "Liz" Lemon is the main character of the American television series 30 Rock.\
+//  She created and writes for the fictional comedy-sketch show The Girlie Show or TGS with Tracy Jordan.'},
+// {
+// hash:"$2a$16$4o0WWtrq.ZefEmEbijNCGukCezqWTqz1VWlPm/xnaLM8d3WlS5pnK",
+// username:"theboywholived",
+// FirstName: "Harry",
+// LastName: "Potter",
+// Profession: "Student",
+// Bio: "Harry Potter is a series of fantasy novels written by British author J. K. Rowling.\
+//  The novels chronicle the life of a young wizard, Harry Potter, and his friends Hermione Granger and Ron Weasley,\
+//   all of whom are students at Hogwarts School of Witchcraft and Wizardry . \
+//   The main story arc concerns Harry's struggle against Lord Voldemort, a dark wizard who intends to become immortal,\
+//    overthrow the wizard governing body known as the Ministry of Magic, and subjugate all wizards and Muggles."}
+// ];
 
 app.listen(3000, () => {
   console.log("We've now got a server!");
@@ -87,31 +87,34 @@ if(process && process.send) process.send({done: true});
 	});
 
 	app.post("/login", async (req, res) => {
-		i=0
-		index=-1
-		while(i<users.length)
-		{
-			if(users[i].username===req.body.username)
-			{
-				index=i;
-				break;
+		try{
+			var user = await userAPI.getUserByName(req.body.username);
+			var ifValidCredentials;
+			if(req.body.password === user.password){
+				ifValidCredentials = true
+			}else{
+				ifValidCredentials = false;
 			}
-			i++;
-		}
-
-		if(index!=-1)
-		{
-			hash=users[index].hash;
-			result=await bcrypt.compare(req.body.password, hash);
-		}
-		if(index!=-1 && result){
-			res.cookie("AuthCookie",hash);
-			res.redirect("home");
-		}else{
-			res.render("index",{
-					title: "Log in",
-					error: "Error, incorrect login info"
-			});
+			//var ifValidCredentials = await bcrypt.compare(req.body.password, user.password);
+			if(ifValidCredentials){
+				res.cookie("AuthCookie",user._id);
+				res.redirect("home");
+			}else{
+				res.render("index",
+					{
+						layout: "login",
+						title: "Retry!",
+						error: "Error, incorrect login info"
+					});
+			}
+		}catch(e){
+			res.render("index", 
+				{
+					layout: "login",
+					title: "Retry!",
+					error: "LOGIN Error: " + e
+				}
+			);
 		}
 	});
 
@@ -127,7 +130,7 @@ if(process && process.send) process.send({done: true});
 			delete(user1.hash);
 			res.render("userDisplay",{
 		 			title: "User info",
-		 			user: JSON.stringify(user1)
+		 			user: user
 		 	});
 			res.status(403);
 		}
@@ -329,17 +332,17 @@ function getUser(hash){
 	if(!hash)
 		return undefined;
 
-	i=0
-	index=-1
-	while(i<users.length)
-	{
-		if(users[i].hash===hash)
-		{
-			index=i;
-			break;
-		}
-		i++;
-	}
+	// i=0
+	// index=-1
+	// while(i<users.length)
+	// {
+	// 	if(users[i].hash===hash)
+	// 	{
+	// 		index=i;
+	// 		break;
+	// 	}
+	// 	i++;
+	// }
 
-	return users[index];
+	return hash;
 }
