@@ -82,7 +82,7 @@ const getPokemonMatchup = function(name,callback){
 
 			//callback(null, );
 			let the_types = []
-			iterator = 0;
+			let iterator = 0;
 			for (var i = response.types.length - 1; i >= 0; i--) {
 				the_types[iterator] = response.types[i].type.name;
 				iterator++;
@@ -91,22 +91,31 @@ const getPokemonMatchup = function(name,callback){
 			let pokelist=[];
 
 			getFullPokemanList(function(error, result){
-				if(result)
-				{
 					let res=result;
 					let againstType=typeDict[the_types[0]];
 
 					for(i=0;i<res.length;i++)
 					{
-						P.getPokemonByName(res[i].name).then(function(response) {
-							if(response.types[0].type.name===againstType)
-								pokelist.push(response);
-						}).catch(function(error) {
-				    	callback(error);
-				    	});
+						P.resource(res[i][0])
+					    .then(function(response) {
+					      console.log(response);
+					    });
 					}
 
 					let curr=pokelist[Math.floor(Math.random() * pokelist.length)];
+
+					var the_moves = [];
+					iterator = 0;
+					for (var i = curr.moves.length - 1; i >= 0; i--) {
+						the_moves[iterator] = curr.moves[i].move.name;
+						iterator++;
+					}
+					the_types = []
+					iterator = 0;
+					for (var i = curr.types.length - 1; i >= 0; i--) {
+						the_types[iterator] = curr.types[i].type.name;
+						iterator++;
+					}
 
 					var matchup = {
 						name: curr.name,
@@ -117,13 +126,13 @@ const getPokemonMatchup = function(name,callback){
 						sprite: curr.sprites.front_default
 						}
 					callback(null, matchup);
-					}
+
 			}).catch(function(error) {
 	    	callback(error);
 	    	});
-		    }).catch(function(error) {
-		    	callback(error);
-		    	});
+		}).catch(function(error) {
+		callback(error);
+		});
 	}
 }
 

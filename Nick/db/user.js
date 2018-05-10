@@ -7,7 +7,6 @@ async function addUser(username, password, favorites)
   if(typeof username!=='string'|| typeof password!=='string'||typeof favorites!=='object')
     throw "addUser: Invalid arguments"
 
-  console.log("This is the password " + password );
   let newUser=
   {
     "_id": uuidv4(),
