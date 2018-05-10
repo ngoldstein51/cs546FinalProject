@@ -7,12 +7,13 @@ async function addUser(username, password, favorites)
   if(typeof username!=='string'|| typeof password!=='string'||typeof favorites!=='object')
     throw "addUser: Invalid arguments"
 
+  console.log("This is the password " + password );
   let newUser=
   {
     "username":username,
     "_id": uuidv4(),
     "password":password,
-    "favoites":favorites
+    "favorites":favorites
   }
 
   const UserCollection = await users();
@@ -37,7 +38,7 @@ async function getAllUsers()
 
 async function getUser(id)
 {
-  if(arguments.length!==1||typeof id!=='object')
+  if(arguments.length!==1||typeof id!=='string')
     throw "getUser: Invalid arguments"
 
   if (!id) throw "You must provide an id to search for";
@@ -51,7 +52,7 @@ async function getUser(id)
 
 async function removeUser(id)
 {
-  if(arguments.length!==1||typeof id!=='object')
+  if(arguments.length!==1||typeof id!=='string')
     throw "removeUser: Invalid arguments"
 
   if (!id) throw "You must provide an id to search for";

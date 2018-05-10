@@ -6,6 +6,7 @@ const staticCSS = express.static(path.join(__dirname + "/public"));
 const handle = require("express-handlebars");
 const cookies=require("cookie-parser");
 const bcrypt=require("bcrypt");
+const userAPI = require("./db/user.js");
 
 const pokemanAPI = require("./pokemanAPI.js");
 
@@ -77,10 +78,11 @@ if(process && process.send) process.send({done: true});
 			// });
 
 			res.render("index",
-			{
-				layout: "login",
-				title: "Welcome! Please Login"
-			});
+				{
+					layout: "login",
+					title: "Welcome! Please Login"
+				}
+			);
 		}
 	});
 
@@ -294,11 +296,24 @@ if(process && process.send) process.send({done: true});
 		// 	res.cookie("AuthCookie",hash);
 		// 	res.redirect("home");
 		// }else{
-		// 	res.render("index",{
-		// 			title: "Log in",
-		// 			error: "Error, incorrect login info"
-		// 	});
+		
 		// }
+		try{
+			const user = await userAPI.addUser(req.body.username,req.body.password,[]);
+			res.render("index",
+				{
+					layout: "login",
+					title: "Account successfully created. Please login!"
+				}
+			);
+		}catch(e){
+			res.render("create-account",
+				{
+					layout: "login",
+					title: "Try again",
+					error: "Unable to create account! Error " + e 
+			});
+		}
 	});
 
 	app.get("/logout", (req, res) => {

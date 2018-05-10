@@ -51,6 +51,12 @@ body > nav > div > img {
   width: 45%;
 }
 
+#login-image { 
+  margin: auto;
+  margin-left: 27%;
+  width: 45%;
+}
+
 .nav{
   width: 75%;
   margin: auto;

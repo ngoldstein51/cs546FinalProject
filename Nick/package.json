@@ -9,12 +9,14 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "pokedex-promise-v2": "^3.1.1",
     "bcrypt": "^2.0.0",
     "body-parser": "^1.18.2",
     "cookie-parser": "^1.4.3",
     "express": "^4.16.3",
     "express-handlebars": "^3.0.0",
-    "path": "^0.12.7"
+    "mongodb": "^3.0.8",
+    "path": "^0.12.7",
+    "pokedex-promise-v2": "^3.1.1",
+    "uuid": "^3.2.1"
   }
 }
