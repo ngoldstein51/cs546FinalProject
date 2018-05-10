@@ -1,24 +1,22 @@
-
 <div class="login-padding">
   <form action="/pokemon/getPokemon" method="POST" id="login-form">
-        <input type="text" name="pokename" class="form-control" placeholder="Pokemon Name">
-        <button type="submit" class="submit-button">Search!</button>
+        <input type="text" name="pokename" class="form-control" placeholder="Pokemon Name" id="pokeman-input">
+        <button type="submit" class="submit-button" id="pokeman-submit">Search!</button>
   </form>
 </div>
 
 
 <table style="width:50%" id="student-table">
   <tr>
-    <th>Student UserName</th>
-    <th>Student Password</th> 
+    <th>All current Pokemon!</th>
   </tr>
 {{#each pokemon}}
    <tr>
-    <td>{{this.url}}</td>
-    <td>{{this.name}}</td> 
+    <td><a onclick="openPokeView(this)" id={{this.name}}>{{this.name}}</a></td>
   </tr>
 {{else}}
-	<td> No moves :( </td>
-  <td> Please add students! </td> 
+	<td> No pokemon :(</td>
 {{/each}}
 </table>
+
+<script type="text/javascript" src="/pokelistHandler.js"></script>

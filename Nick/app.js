@@ -56,8 +56,9 @@ app.listen(3000, () => {
 
 if(process && process.send) process.send({done: true});
 
-	app.get("/", (req, res) => {
-		user=getUser(req.cookies.AuthCookie);
+	app.get("/", async (req, res) => {
+
+		var user = await getUser(req.cookies.AuthCookie);
 
 		if(user)
 		{
@@ -118,8 +119,8 @@ if(process && process.send) process.send({done: true});
 		}
 	});
 
-	app.get("/home", (req, res) => {
-		user=getUser(req.cookies.AuthCookie)
+	app.get("/home", async (req, res) => {
+		var user = await getUser(req.cookies.AuthCookie);
 
 		if(!user){
 			res.render("notLoggedIn",{
@@ -127,17 +128,18 @@ if(process && process.send) process.send({done: true});
 		 	});
 		}else{
 			user1=Object.assign({},user);
-			delete(user1.hash);
+			delete(user1.password);
 			res.render("userDisplay",{
 		 			title: "User info",
-		 			user: user
+		 			username: user1.username,
+		 			favorite: user1.favorites
 		 	});
 			res.status(403);
 		}
 	});
 
-	app.get("/pokemon", (req, res) => {
-		user=getUser(req.cookies.AuthCookie)
+	app.get("/pokemon", async (req, res) => {
+		var user = await getUser(req.cookies.AuthCookie);
 
 		if(!user){
 			res.render("notLoggedIn",{
@@ -158,8 +160,8 @@ if(process && process.send) process.send({done: true});
 		}
 	});
 
-	app.post("/pokemon/getPokemon", (req, res) => {
-		user=getUser(req.cookies.AuthCookie)
+	app.post("/pokemon/getPokemon", async (req, res) => {
+		var user = await getUser(req.cookies.AuthCookie);
 
 		if(!user){
 			res.render("notLoggedIn",{
@@ -174,6 +176,9 @@ if(process && process.send) process.send({done: true});
 				if(error){
 					//do an error
 					console.log(error);
+					res.render("pokemon/pokemonView",{
+			 			title: "Not a valid pokemon!"
+				 	});
 				}else{
 					//render the correct pokemon screen
 					console.log("It worked");
@@ -181,7 +186,7 @@ if(process && process.send) process.send({done: true});
 					res.render("pokemon/pokemonView",{
 			 			title: "Pokemon :: " + result.name,
 			 			user: JSON.stringify(user1),
-			 			height: result.height,
+			 			height: (result.height*10)/2.54 ,
 			 			weight: result.weight,
 			 			moves: result.moves,
 			 			sprite: result.sprite
@@ -193,8 +198,8 @@ if(process && process.send) process.send({done: true});
 		}
 	});
 
-	app.post("/pokemon/getMatchup", (req, res) => {
-		user=getUser(req.cookies.AuthCookie)
+	app.post("/pokemon/getMatchup", async (req, res) => {
+		var user = await getUser(req.cookies.AuthCookie);
 
 		if(!user){
 			res.render("notLoggedIn",{
@@ -228,8 +233,8 @@ if(process && process.send) process.send({done: true});
 		}
 	});
 
-	app.get("/matchup", (req, res) => {
-		user=getUser(req.cookies.AuthCookie)
+	app.get("/matchup", async (req, res) => {
+		var user = await getUser(req.cookies.AuthCookie);
 
 		if(!user){
 			res.render("notLoggedIn",{
@@ -246,8 +251,8 @@ if(process && process.send) process.send({done: true});
 		}
 	});
 
-	app.get("/forum", (req, res) => {
-		user=getUser(req.cookies.AuthCookie)
+	app.get("/forum", async (req, res) => {
+		var user = await getUser(req.cookies.AuthCookie);
 
 		if(!user){
 			res.render("notLoggedIn",{
@@ -328,21 +333,13 @@ if(process && process.send) process.send({done: true});
 
 });
 
-function getUser(hash){
-	if(!hash)
+async function getUser(id){
+	if(!id)
 		return undefined;
-
-	// i=0
-	// index=-1
-	// while(i<users.length)
-	// {
-	// 	if(users[i].hash===hash)
-	// 	{
-	// 		index=i;
-	// 		break;
-	// 	}
-	// 	i++;
-	// }
-
-	return hash;
+	try{
+		let the_user = await userAPI.getUser(id);
+		return the_user;
+	}catch(e){
+		return undefined;
+	}
 }

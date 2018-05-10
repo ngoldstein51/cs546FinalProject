@@ -2,8 +2,10 @@ var Pokedex = require('pokedex-promise-v2');
 var P = new Pokedex();
 
 const getPokemonByName = function(name,callback){
-	if(arguments.length!==2||typeof name!== 'string'){
-		throw "Error! Not a valid pokemon!"
+	console.log(name);
+	console.log(typeof name);
+	if(arguments.length!==2||typeof name!== 'string'||name===""){
+		callback("Error! Not a valid pokemon!",null);
 	}else{
 		P.getPokemonByName(name).then(function(response) {
 
@@ -31,7 +33,7 @@ const getPokemonByName = function(name,callback){
 
 const getFullPokemanList = function(callback){
 	var interval = {
-	    limit: 150
+	    limit: 802
 	};
 
 	P.getPokemonsList(interval).then(function(response) {
