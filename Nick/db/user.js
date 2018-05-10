@@ -74,6 +74,25 @@ async function removeAllUsers()
   }
 }
 
+async function updateUserFav(id, monList)
+{
+  if(arguments.length!==2||typeof id!=='string' || typeof monList!=='object')
+    throw "updateUserFav: Invalid arguments"
+
+  const UserCollection = await users();
+
+  const updatedUser = {};
+
+  if (monList) {
+    updatedUser["favorites"] = monList;
+  }
+  
+  await UserCollection.updateOne({_id:id}, {$set: updatedUser});
+
+  let ret=await getUser(id);
+  return ret;
+}
+
 
 module.exports = {
     firstName: "Noah", 
@@ -83,5 +102,6 @@ module.exports = {
     getAllUsers,
     getUser,
     removeUser,
-    removeAllUsers
+    removeAllUsers,
+    updateUserFav
 };
