@@ -181,14 +181,14 @@ if(process && process.send) process.send({done: true});
 				 	});
 				}else{
 					//render the correct pokemon screen
-					console.log("It worked");
-					console.log(result.moves);
+					//console.log(result);
 					res.render("pokemon/pokemonView",{
 			 			title: "Pokemon :: " + result.name,
 			 			user: JSON.stringify(user1),
-			 			height: (result.height*10)/2.54 ,
-			 			weight: result.weight,
+			 			height: Math.ceil((result.height*10)/2.54) ,
+			 			weight: Math.ceil((result.weight/(10*0.45359237))),
 			 			moves: result.moves,
+			 			types: result.types,
 			 			sprite: result.sprite
 				 	});
 					res.status(403);
@@ -209,27 +209,33 @@ if(process && process.send) process.send({done: true});
 			user1=Object.assign({},user);
 			delete(user1.hash);
 
+			//let matchupPokemon=""
+
+			pokemanAPI.getPokemonMatchup(req.body.pokename, function(error, result){
+				//matchupPokemon=result.name;
+			});
 			//req.params.studentId
 			pokemanAPI.getPokemonByName(req.body.pokename, function(error, result){
 				if(error){
 					//do an error
 					console.log(error);
+					res.render("pokemon/matchup",{
+			 			title: "Error: Not a valid pokemon!"
+				 	});
 				}else{
 					//render the correct pokemon screen
-					console.log("It worked");
-					console.log(result.moves);
 					res.render("pokemon/matchupResults",{
 			 			title: "Pokemon :: " + result.name,
 			 			user: JSON.stringify(user1),
-			 			height: result.height,
-			 			weight: result.weight,
+			 			height: Math.ceil((result.height*10)/2.54) ,
+			 			weight: Math.ceil((result.weight/(10*0.45359237))),
 			 			moves: result.moves,
+			 			types: result.types,
 			 			sprite: result.sprite
 				 	});
 					res.status(403);
 				}
 			});
-			
 		}
 	});
 

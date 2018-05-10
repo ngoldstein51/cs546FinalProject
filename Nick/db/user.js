@@ -10,8 +10,8 @@ async function addUser(username, password, favorites)
   console.log("This is the password " + password );
   let newUser=
   {
-    "username":username,
     "_id": uuidv4(),
+    "username":username,
     "password":password,
     "favorites":favorites
   }
