@@ -50,6 +50,20 @@ async function getUser(id)
   return user;
 }
 
+async function getUserByName(username)
+{
+  if(arguments.length!==1||typeof username!=='string')
+    throw "getUserByName: Invalid arguments"
+
+  if (!username) throw "You must provide an username to search for";
+
+  const UserCollection = await users();
+  const user = await UserCollection.findOne({ username: username });
+  if (user === null) throw "No user with that username";
+
+  return user;
+}
+
 async function removeUser(id)
 {
   if(arguments.length!==1||typeof id!=='string')
