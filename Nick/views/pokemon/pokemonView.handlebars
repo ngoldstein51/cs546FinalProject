@@ -1,6 +1,16 @@
-<section>
-	<h1> {{title}} <h1>
-	<h1> Height:: {{height}} <h1>
-	<h1> Weight:: {{weight}} <h1>
-	<img src="{{sprite}}">
+<section class="display-pokemon-section">
+	<div class="display-pokemon">
+		<h3> {{title}} </h3>
+		<h3> Height:: {{height}} </h3>
+		<h3> Weight:: {{weight}} </h3>
+		<h3> --- Moves --- </h3>
+		{{#each moves}}
+			<h4>{{this}}</h4> 
+		{{else}}
+			<h4> No students :( </h4>
+		{{/each}}
+	</div>
+	<div class="display-pokemon">
+		<img src="{{sprite}}"/>
+	</div>
 </section>

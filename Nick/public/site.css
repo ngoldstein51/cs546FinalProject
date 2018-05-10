@@ -45,7 +45,7 @@ ul {
   list-style-type: none;
 }
 
-img {
+body > nav > div > img {
   margin: auto;
   margin-left: 27%;
   width: 45%;
@@ -91,6 +91,7 @@ img {
   border-radius: 3px;
   width: 70%;
   margin: auto;
+  overflow: overlay;
   /*margin-top: 100px;*/
 }
 
@@ -142,4 +143,14 @@ img {
   background-image: none;
   border: 1px solid transparent;
   border-radius: 4px;
+}
+
+.display-pokemon-section{
+  display: flex;
+  justify-content: space-between;
+}
+
+.display-pokemon {
+  display: inline-block;
+  padding: 40px;
 }

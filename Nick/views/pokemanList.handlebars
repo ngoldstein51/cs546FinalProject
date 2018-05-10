@@ -1,7 +1,10 @@
-<form action="/pokemon/getPokemon" method="POST" id="login-form">
-      <input type="text" name="pokename" class="form-control" placeholder="Pokemon Name">
-      <button type="submit" class="submit-button">Search!</button>
+
+<div class="login-padding">
+  <form action="/pokemon/getPokemon" method="POST" id="login-form">
+        <input type="text" name="pokename" class="form-control" placeholder="Pokemon Name">
+        <button type="submit" class="submit-button">Search!</button>
   </form>
+</div>
 
 
 <table style="width:50%" id="student-table">
@@ -15,7 +18,7 @@
     <td>{{this.name}}</td> 
   </tr>
 {{else}}
-	<td> No students :( </td>
+	<td> No moves :( </td>
   <td> Please add students! </td> 
 {{/each}}
 </table>

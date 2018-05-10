@@ -172,7 +172,43 @@ if(process && process.send) process.send({done: true});
 				}else{
 					//render the correct pokemon screen
 					console.log("It worked");
+					console.log(result.moves);
 					res.render("pokemon/pokemonView",{
+			 			title: "Pokemon :: " + result.name,
+			 			user: JSON.stringify(user1),
+			 			height: result.height,
+			 			weight: result.weight,
+			 			moves: result.moves,
+			 			sprite: result.sprite
+				 	});
+					res.status(403);
+				}
+			});
+			
+		}
+	});
+
+	app.post("/pokemon/getMatchup", (req, res) => {
+		user=getUser(req.cookies.AuthCookie)
+
+		if(!user){
+			res.render("notLoggedIn",{
+		 			title: "Sorry you are not logged in"
+		 	});
+		}else{
+			user1=Object.assign({},user);
+			delete(user1.hash);
+
+			//req.params.studentId
+			pokemanAPI.getPokemonByName(req.body.pokename, function(error, result){
+				if(error){
+					//do an error
+					console.log(error);
+				}else{
+					//render the correct pokemon screen
+					console.log("It worked");
+					console.log(result.moves);
+					res.render("pokemon/matchupResults",{
 			 			title: "Pokemon :: " + result.name,
 			 			user: JSON.stringify(user1),
 			 			height: result.height,
@@ -197,8 +233,8 @@ if(process && process.send) process.send({done: true});
 		}else{
 			user1=Object.assign({},user);
 			delete(user1.hash);
-			res.render("userDisplay",{
-		 			title: "User info",
+			res.render("pokemon/matchup",{
+		 			title: "Matchup!",
 		 			user: JSON.stringify(user1)
 		 	});
 			res.status(403);

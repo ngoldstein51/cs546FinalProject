@@ -35,7 +35,7 @@ const getFullPokemanList = function(callback){
 	};
 
 	P.getPokemonsList(interval).then(function(response) {
-		//do more parsing on each pokeman to get the data and shit
+		//do more parsing on each pokeman to get the data
 		console.log(response);
 		callback(null, response.results);
 	}).catch(function(error){
