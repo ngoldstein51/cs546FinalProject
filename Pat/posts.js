@@ -1,11 +1,11 @@
-const mongoCollections = require("./mongoCollections");
+const mongoCollections = require("../config/mongoCollections");
 const posts = mongoCollections.posts;
 const uuidv4 = require('uuid/v4');
 
 
 module.exports = {
 
-	createPost: async function createPost(post,comments){
+	createPost: async function createPost(title,author,details,tags,content,comments){
 
     	// if (!username) throw "You must provide a username for your user";
     	// if (!password) throw "You must provide a password for your user";
@@ -34,8 +34,8 @@ module.exports = {
 
 	    const newId = insertInfo.insertedId;
 
-	    const post = await this.getPostById(newId);
-	    return post;
+	    const addedPost = await this.getPostById(newId);
+	    return addedPost;
 
 
 	},
@@ -44,21 +44,20 @@ module.exports = {
     	
     	const postCollection = await posts();
 
-    	const posts = await postCollection.find({}).toArray();
-
-    	return posts;
+    	const allPosts = await postCollection.find({}).toArray();
+    	return allPosts;
     },
-    // deleteAll: async function deleteAll(){
+    deleteAll: async function deleteAll(){
     	
-    // 	const taskCollection = await todoItems();
-    // 	// console.log(" \n\n\n        -----BREAKPOINT----- \n\n\n\n");
+    	const postCollection = await posts();
+    	// console.log(" \n\n\n        -----BREAKPOINT----- \n\n\n\n");
 
-    // 	await taskCollection.deleteMany({});
+    	await postCollection.deleteMany({});
 
-    // 	console.log("done");
+    	console.log("done");
 
-    // 	return 4;
-    // },
+    	return 4;
+    },
 
 	getPostById: async function getPostById(id){
 		
@@ -81,12 +80,13 @@ module.exports = {
 	    var comments = post['comments'];
 	    var newComment = {};
 
+	    newComment['commentId'] = uuidv4();
 	    newComment['postId'] = postId;
 	    newComment['author'] = author;
 	    newComment['content'] = content;
 	    newComment['timestamp'] = new Date().toISOString().replace(/T/, ' ').replace(/\..+/, '');
 
-	    comments.append(newComment);
+	    comments.push(newComment);
 
 	    const updatedInfo = await postCollection.update(
    			{ _id: postId },
