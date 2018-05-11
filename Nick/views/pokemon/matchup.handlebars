@@ -1,7 +1,9 @@
 <div class="login-padding">
 	<h3> {{title}} </h3>
+	<div class="loading style-2" id="loading" style="display: none;"><div class="loading-wheel"></div></div>
   <form action="/pokemon/getMatchup" method="POST" id="login-form">
         <input type="text" name="pokename" class="form-control" placeholder="Pokemon Name">
-        <button type="submit" class="submit-button">Find the best match!</button>
+        <button type="submit" class="submit-button" onclick="changePointerToLoading()">Find the best match!</button>
   </form>
 </div>
+<script type="text/javascript" src="/js/loading.js"></script>

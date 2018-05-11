@@ -1,6 +1,7 @@
 var Pokedex = require('pokedex-promise-v2');
 var P = new Pokedex();
 const async = require('async');
+const shuffleAlg = require('./api/shuffleAlg.js');
 
 const getPokemonByName = function(name,callback){
 	// console.log(name);
@@ -93,14 +94,13 @@ const getPokemonMatchup = function(name,callback){
 			try{
 				getFullPokemanList( function(error, result){
 					if(!error){
-						let res=result;
+						let res=shuffleAlg.shuffle(result);
 						let againstType=typeDict[the_types[0]];
 						console.log("MY name is jeff");
 						console.log(res);
 						console.log(againstType);
 						var chosen_pokemon;
 						var matchup;
-						var matchup_list = [];
 
 						async.eachOfLimit(res, 1, function(obj,fuckme,everyCallback){
 							console.log("This is the obj :: "  + obj.name);
@@ -133,8 +133,8 @@ const getPokemonMatchup = function(name,callback){
 										types: the_possible_types,
 										sprite: againstTypeResponse.sprites.front_default
 									}
-									matchup_list.push(matchup);
-									return everyCallback();
+									//matchup_list.push(matchup);
+									return everyCallback(matchup);
 								}else{
 									console.log("Continute because I didnt find anything")
 									return everyCallback();
@@ -145,9 +145,9 @@ const getPokemonMatchup = function(name,callback){
 							});
 						}, function(poke){
 							//callback(err , null);
-							if(matchup_list){
-								var index = Math.floor(Math.random() * matchup_list.length);
-								callback(null,matchup_list[index]);
+							if(poke){
+								//var index = Math.floor(Math.random() * matchup_list.length);
+								callback(null,poke);
 							}else{
 								callback(null,null);
 							}
