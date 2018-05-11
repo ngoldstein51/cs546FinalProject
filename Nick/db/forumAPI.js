@@ -4,7 +4,7 @@ const uuidv4 = require('uuid/v4');
 
 module.exports = {
 
-	createPost: async function createPost(post,comments){
+	createPost: async function createPost(title,author,details,tags,content,comments){
 
     	// if (!username) throw "You must provide a username for your user";
     	// if (!password) throw "You must provide a password for your user";
@@ -16,7 +16,14 @@ module.exports = {
 
     	const postCollection = await posts();
 
+
+
+
     	var newPost ={};
+
+
+
+
 
 		newPost['_id'] = uuidv4();
 		newPost['title'] = title;
@@ -26,6 +33,8 @@ module.exports = {
 		newPost['content'] = content;
 		newPost['comments'] = comments;
 
+
+
 		//breakpoint
 	    
 	    const insertInfo = await postCollection.insertOne(newPost);
@@ -33,8 +42,8 @@ module.exports = {
 
 	    const newId = insertInfo.insertedId;
 
-	    var post = await this.getPostById(newId);
-	    return post;
+	    const addedPost = await this.getPostById(newId);
+	    return addedPost;
 
 
 	},
@@ -43,21 +52,20 @@ module.exports = {
     	
     	const postCollection = await posts();
 
-    	const posts = await postCollection.find({}).toArray();
-
-    	return posts;
+    	const allPosts = await postCollection.find({}).toArray();
+    	return allPosts;
     },
-    // deleteAll: async function deleteAll(){
+    deleteAll: async function deleteAll(){
     	
-    // 	const taskCollection = await todoItems();
-    // 	// console.log(" \n\n\n        -----BREAKPOINT----- \n\n\n\n");
+    	const postCollection = await posts();
+    	// console.log(" \n\n\n        -----BREAKPOINT----- \n\n\n\n");
 
-    // 	await taskCollection.deleteMany({});
+    	await postCollection.deleteMany({});
 
-    // 	console.log("done");
+    	console.log("done");
 
-    // 	return 4;
-    // },
+    	return 4;
+    },
 
 	getPostById: async function getPostById(id){
 		
@@ -80,12 +88,13 @@ module.exports = {
 	    var comments = post['comments'];
 	    var newComment = {};
 
+	    newComment['commentId'] = uuidv4();
 	    newComment['postId'] = postId;
 	    newComment['author'] = author;
 	    newComment['content'] = content;
 	    newComment['timestamp'] = new Date().toISOString().replace(/T/, ' ').replace(/\..+/, '');
 
-	    comments.append(newComment);
+	    comments.push(newComment);
 
 	    const updatedInfo = await postCollection.update(
    			{ _id: postId },
@@ -99,6 +108,43 @@ module.exports = {
    		if (updatedInfo.modifiedCount === 0) {
       		throw "could not add comment successfully";
     	}
+
+
 	    return newComment;
+
 	}
+
+	// deleteComment: async function deleteComment(postId, commentId){
+
+	// 	const postCollection = await posts();
+	//     const post = await postCollection.findOne({ _id: postId });
+	//     if( post === null) throw "No Post with that id";
+
+	//     var comments = post['comments'];
+
+	//     for (var i = comments.length - 1; i >= 0; i--) {
+	//     	var currComment = comments[i];
+	//     	if(currComment['commentId'] === commentId){
+	    		
+	//     	}
+	//     }
+
+	//     const updatedInfo = await postCollection.update(
+ //   			{ _id: postId },
+ //   			{	$set: 
+ //   				{	
+ //   					comments: comments
+ //   				}
+ //   			}
+	// 	)
+
+ //   		if (updatedInfo.modifiedCount === 0) {
+ //      		throw "could not add comment successfully";
+ //    	}
+
+
+	//     return newComment;
+
+	// }
+
 };

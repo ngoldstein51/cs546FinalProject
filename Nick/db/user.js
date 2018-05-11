@@ -7,6 +7,13 @@ async function addUser(username, password, favorites)
   if(typeof username!=='string'|| typeof password!=='string'||typeof favorites!=='object')
     throw "addUser: Invalid arguments"
 
+  const UserCollection = await users();
+
+  const isExistingUser = await userCollection.findOne({ username: username });
+  if(isExistingUser!==null)
+      throw "username already exists";
+
+
   let newUser=
   {
     "_id": uuidv4(),
@@ -15,7 +22,6 @@ async function addUser(username, password, favorites)
     "favorites":favorites
   }
 
-  const UserCollection = await users();
 
   const insertInfo = await UserCollection.insertOne(newUser);
   if (insertInfo.insertedCount === 0) throw "Could not add user";
