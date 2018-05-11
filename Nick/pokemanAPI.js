@@ -151,7 +151,6 @@ const getPokemonMatchup = function(name,callback){
 							}else{
 								callback(null,null);
 							}
-							console.log("GUESS FUCK ME THEN");
 							//callback(null,null);
 						});
 						 // did not find a matchup
@@ -167,7 +166,7 @@ const getPokemonMatchup = function(name,callback){
 		}).catch(function(error) {
 			callback(error);
 		});
-		// console.log("I FUCKiNG HATE M YLIFE");
+
 		//callback("FUCK");
 	}
 }

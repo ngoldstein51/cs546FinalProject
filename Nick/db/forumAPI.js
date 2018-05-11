@@ -51,11 +51,9 @@ module.exports = {
     deleteAll: async function deleteAll(){
     	
     	const postCollection = await posts();
-    	// console.log(" \n\n\n        -----BREAKPOINT----- \n\n\n\n");
 
     	await postCollection.deleteMany({});
 
-    	console.log("done");
 
     	return 4;
     },

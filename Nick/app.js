@@ -294,7 +294,6 @@ if(process && process.send) process.send({done: true});
 		var user = req.body.userId;
 		var commentValue = req.body.commentValue;
 		var postId = req.body.postId;
-		console.log("This is my thingy boob " + user);
 
 		try{
 			var addedComment = await forumAPI.createComment(postId,user,commentValue);
