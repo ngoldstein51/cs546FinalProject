@@ -205,6 +205,12 @@ i {
   text-decoration: underline;
 }
 
+.bad-button-thats-not-a-button{
+  border-style: solid;
+  padding: 20px;
+  border-radius: 5px;
+  cursor: pointer;
+}
 
 /*LOADING ANIMATION*/
 

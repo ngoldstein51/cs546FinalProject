@@ -6,6 +6,7 @@ const staticCSS = express.static(path.join(__dirname + "/public"));
 const handle = require("express-handlebars");
 const cookies=require("cookie-parser");
 const bcrypt=require("bcrypt");
+const async = require("async");
 const saltRounds = 2;
 
 const userAPI = require("./db/user.js");
@@ -293,6 +294,7 @@ if(process && process.send) process.send({done: true});
 		var user = req.body.userId;
 		var commentValue = req.body.commentValue;
 		var postId = req.body.postId;
+		console.log("This is my thingy boob " + user);
 
 		try{
 			var addedComment = await forumAPI.createComment(postId,user,commentValue);
@@ -301,29 +303,6 @@ if(process && process.send) process.send({done: true});
 			console.log("There was an error! " + e);
 			res.status(400).end();
 		}
-
-		//var user = await getUser(req.cookies.AuthCookie);
-		// if(!user){
-		// 	res.render("notLoggedIn",{
-		//  			title: "Sorry you are not logged in"
-		//  	});
-		// }else{
-		// 	user1=Object.assign({},user);
-		// 	delete(user1.hash);
-
-		// 	try{
-		// 		//var allPosts = await forumAPI.getAllPosts();
-		// 		var allPosts;
-		// 		res.render("forumDisplay",{
-		//  			title: "Discussion page",
-		//  			posts: allPosts
-		//  		});
-		// 	}catch(e){
-		// 		res.render("notLoggedIn",{
-		// 			title: "There was an error loading the posts, please try again"
-		// 		});
-		// 	}
-		// }
 	});
 
 	app.post("/forum/newPost", async (req, res) => {
@@ -361,30 +340,13 @@ if(process && process.send) process.send({done: true});
 
 
 	app.post("/create-account-attempt", async (req, res) => {
-		// i=0
-		// index=-1
-		// while(i<users.length)
-		// {
-		// 	if(users[i].username===req.body.username)
-		// 	{
-		// 		index=i;
-		// 		break;
-		// 	}
-		// 	i++;
-		// }
-
-		// if(index!=-1)
-		// {
-		// 	hash=users[index].hash;
-		// 	result=await bcrypt.compare(req.body.password, hash);
-		// }
-		// if(index!=-1 && result){
-		// 	res.cookie("AuthCookie",hash);
-		// 	res.redirect("home");
-		// }else{
-		
-		// }
 		try{
+			const pass1=req.body.password;
+			const pass2=req.body.password2;
+
+			if(pass1!==pass2){
+				throw "Error: passwords must match!";
+			}
 			
   			const hashedPassword = await bcrypt.hash(req.body.password, saltRounds);
 

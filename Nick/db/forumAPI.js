@@ -1,6 +1,7 @@
 const mongoCollections = require("./mongoCollections.js");
 const posts = mongoCollections.posts;
 const uuidv4 = require('uuid/v4');
+const userAPI = require('./user.js');
 
 module.exports = {
  
@@ -13,7 +14,8 @@ module.exports = {
 		// 	throw "username must be a string";
 		// if(typeof password !== 'string')
 		// 	throw "password must be a string";
-
+		
+		var user1 = await userAPI.getUser(author);
     	const postCollection = await posts();
 
 
@@ -22,6 +24,7 @@ module.exports = {
 		newPost['_id'] = uuidv4();
 		newPost['title'] = title;
 		newPost['author'] = author;
+		newPost['authorName'] = user1.username;
 		newPost['content'] = content;
 		newPost['comments'] = comments;
 
@@ -71,6 +74,11 @@ module.exports = {
 
 	createComment: async function createComment(postId, author, content){
 
+		console.log("Made it here");
+		console.log(author);
+		var user1 = await userAPI.getUser(author);
+		console.log("Also made it here " + user1.username);
+
 		const postCollection = await posts();
 	    const post = await postCollection.findOne({ _id: postId });
 	    if( post === null) throw "No Post with that id";
@@ -81,6 +89,7 @@ module.exports = {
 	    newComment['commentId'] = uuidv4();
 	    newComment['postId'] = postId;
 	    newComment['author'] = author;
+	    newComment['authorName'] = user1.username;
 	    newComment['content'] = content;
 	    newComment['timestamp'] = new Date().toISOString().replace(/T/, ' ').replace(/\..+/, '');
 

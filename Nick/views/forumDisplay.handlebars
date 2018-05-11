@@ -1,5 +1,5 @@
 <div class="new-post">
-		<h2 id="favoriteIcon" onclick="newPost('{{userId}}')">New post</h2>
+		<h2 id="favoriteIcon" class="bad-button-thats-not-a-button" onclick="newPost('{{userId}}')">New post</h2>
 </div>
 
 <hr>
@@ -15,7 +15,7 @@
 					<div class="comment">
 						<p> {{this.content}} </p>
 						<div class="commenter">
-							<p> by {{this.commentAuthorName}} </p>
+							<p> by {{this.authorName}} </p>
 						</div>
 					</div>
 				{{else}}
@@ -24,36 +24,14 @@
 					</div>
 				{{/each}}
 			</div>
-			<div class="new-comment" id="favoriteIcon" onclick="newComment('{{userId}}','{{this._id}}')">
+			<div class="new-comment" id="favoriteIcon" onclick="newComment('{{../userId}}','{{this._id}}')">
 				<p style="display: inline-block;" id="favoriteText">Post a new comment</p>
 				<i class="material-icons">comment</i>
 			</div>
 		</div>
 	{{else}}
 		<div class="post">
-			<h2>Post Title</h2>
-			<h3 class="post-author">by Author </h3>
-			<p>This is my post topic thing</p>
-			<hr>
-			<div class="comments" id="comments">
-				<div class="comment">
-					<p> This is my comment </p>
-					<div class="commenter">
-						by Daniel
-					</div>
-				</div>
-				<div class="comment">
-					<p> This is 2nd my comment </p>
-					<div class="commenter">
-						by Billy
-					</div>
-				</div>
-			</div>
-			<hr>
-			<div class="new-comment" id="favoriteIcon" onclick="newComment('{{userId}}','{{postID}}')">
-				<p style="display: inline-block;" id="favoriteText">Post a new comment</p>
-				<i class="material-icons">comment</i>
-			</div>
+			<h2>Currently no posts! You should be the first one!</h2>
 		</div>
 	
 	{{/each}}

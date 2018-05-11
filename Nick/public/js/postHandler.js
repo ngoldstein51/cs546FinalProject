@@ -30,6 +30,7 @@ function postNewPost(userId){
 
 
 function newPost(id){
+	console.log("This is the id " + id);
 	if(!inProgressNewPost){
 		inProgressNewPost = true;
 		var postParent = document.getElementById("postParent");
@@ -94,6 +95,8 @@ function postNewComment(userId,postId){
 function newComment(userId,postId){
 	if(!inProgressNewComment){
 		console.log(postId);
+		console.log("This is the userId");
+		console.log(userId);
 		inProgressNewComment = true;
 		var commentParent = document.getElementById(postId);
 		var newCommentInput = document.createElement("textarea");
