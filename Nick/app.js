@@ -199,48 +199,76 @@ if(process && process.send) process.send({done: true});
 	});
 
 	app.post("/pokemon/getMatchup", async (req, res) => {
-		var user = await getUser(req.cookies.AuthCookie);
-
-		if(!user){
+		console.log("I am in getMatchup")
+		//var user = await getUser(req.cookies.AuthCookie);
+		if(false){
 			res.render("notLoggedIn",{
-		 			title: "Sorry you are not logged in"
+		 		title: "Sorry you are not logged in"
 		 	});
 		}else{
-			user1=Object.assign({},user);
-			delete(user1.hash);
+			// user1=Object.assign({},user);
+			// delete(user1.hash);
 
 			//let matchupPokemon=""
-
+			console.log("I am here!");
 			pokemanAPI.getPokemonMatchup(req.body.pokename, function(error, result){
-				//matchupPokemon=result.name;
-			});
-			//req.params.studentId
-			pokemanAPI.getPokemonByName(req.body.pokename, function(error, result){
-				if(error){
-					//do an error
-					console.log(error);
-					res.render("pokemon/matchup",{
-			 			title: "Error: Not a valid pokemon!"
-				 	});
-				}else{
-					//render the correct pokemon screen
+				if(!error && result){
+					console.log("This is real this is me " + result);
 					res.render("pokemon/matchupResults",{
 			 			title: "Pokemon :: " + result.name,
-			 			user: JSON.stringify(user1),
 			 			height: Math.ceil((result.height*10)/2.54) ,
 			 			weight: Math.ceil((result.weight/(10*0.45359237))),
 			 			moves: result.moves,
 			 			types: result.types,
 			 			sprite: result.sprite
 				 	});
-					res.status(403);
+				}else if(!error && !result){
+					res.render("notLoggedIn",{
+						title: " Could not find a good match!"
+					})
+
+				}else{
+					res.render("notLoggedIn",
+						{
+							title: "There was an error! " + error
+						}
+					);
 				}
+				//matchupPokemon=result.name;
 			});
+			//req.params.studentId
+			// pokemanAPI.getPokemonByName(req.body.pokename, function(error, result){
+			// 	if(error){
+			// 		//do an error
+			// 		console.log(error);
+			// 		res.render("pokemon/matchup",{
+			//  			title: "Error: Not a valid pokemon!"
+			// 	 	});
+			// 	}else{
+			// 		//render the correct pokemon screen
+			// 		res.render("pokemon/matchupResults",{
+			//  			title: "Pokemon :: " + result.name,
+			//  			user: JSON.stringify(user1),
+			//  			height: Math.ceil((result.height*10)/2.54) ,
+			//  			weight: Math.ceil((result.weight/(10*0.45359237))),
+			//  			moves: result.moves,
+			//  			types: result.types,
+			//  			sprite: result.sprite
+			// 	 	});
+			// 		res.status(403);
+			// 	}
+			// });
 		}
 	});
 
 	app.get("/matchup", async (req, res) => {
-		var user = await getUser(req.cookies.AuthCookie);
+		try{
+			var user = await getUser(req.cookies.AuthCookie);
+		}catch(e){
+			res.render("notLoggedIn",{
+		 			title: "Sorry you are not logged in"
+		 	});
+		}
 
 		if(!user){
 			res.render("notLoggedIn",{
