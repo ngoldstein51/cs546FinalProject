@@ -5,7 +5,7 @@ const uuidv4 = require('uuid/v4');
 
 module.exports = {
 
-	createThread: async function createThread(post,comments){
+	createPost: async function createPost(post,comments){
 
     	// if (!username) throw "You must provide a username for your user";
     	// if (!password) throw "You must provide a password for your user";
@@ -20,10 +20,9 @@ module.exports = {
 
 
 
-    	var newThread ={};
-		var newPost = {};
+    	var newPost ={};
 
-		newThread['comments'] = comments;
+
 
 
 
@@ -33,6 +32,9 @@ module.exports = {
 		newPost['details'] = details;
 		newPost['tags'] = tags;
 		newPost['content'] = content;
+		newPost['comments'] = comments;
+
+
 
 		//breakpoint
 	    
@@ -82,6 +84,34 @@ module.exports = {
 	createComment: async function createComment(postId, author, content){
 
 		const postCollection = await posts();
+	    const post = await postCollection.findOne({ _id: postId });
+	    if( post === null) throw "No Post with that id";
+
+	    var comments = post['comments'];
+	    var newComment = {};
+
+	    newComment['postId'] = postId;
+	    newComment['author'] = author;
+	    newComment['content'] = content;
+	    newComment['timestamp'] = new Date().toISOString().replace(/T/, ' ').replace(/\..+/, '');
+
+	    comments.append(newComment);
+
+	    const updatedInfo = await postCollection.update(
+   			{ _id: postId },
+   			{	$set: 
+   				{	
+   					comments: comments
+   				}
+   			}
+		)
+
+   		if (updatedInfo.modifiedCount === 0) {
+      		throw "could not add comment successfully";
+    	}
+
+
+	    return newComment;
 
 	}
 
