@@ -271,9 +271,13 @@ if(process && process.send) process.send({done: true});
 			try{
 				var allPosts = await forumAPI.getAllPosts();
 				//var allPosts;
+				// console.log(user1.id);
+				// console.log(user1._id);
+				console.log(allPosts);
+
 				res.render("forumDisplay",{
 		 			title: "Discussion page",
-		 			userId: user1,
+		 			userId: user1._id,
 		 			posts: allPosts
 		 		});
 			}catch(e){
@@ -289,6 +293,15 @@ if(process && process.send) process.send({done: true});
 		var user = req.body.userId;
 		var commentValue = req.body.commentValue;
 		var postId = req.body.postId;
+
+		try{
+			var addedComment = await forumAPI.createComment(postId,user,commentValue);
+			res.status(200).end();
+		}catch(e){
+			console.log("There was an error! " + e);
+			res.status(400).end();
+		}
+
 		//var user = await getUser(req.cookies.AuthCookie);
 		// if(!user){
 		// 	res.render("notLoggedIn",{
@@ -316,11 +329,21 @@ if(process && process.send) process.send({done: true});
 	app.post("/forum/newPost", async (req, res) => {
 
 		var user = req.body.userId;
-		var commentValue = req.body.postTitle;
-		var postId = req.body.postContent;
+		var postTitle = req.body.postTitle;
+		var postContent = req.body.postContent;
 
-		console.log("I am inside of new comment");
+		try{
+			var addedPost = await forumAPI.createPost(postTitle,user,postContent,[]);
+			res.status(200).end();
+		}catch(e){
+			console.log("There was an error! " + e);
+			res.status(400).end();
+		}
+
+		console.log("I am inside of new post");
 		console.log(user);
+		console.log(postTitle);
+		console.log(postContent);
 
 	});
 

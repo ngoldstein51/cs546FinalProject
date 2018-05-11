@@ -6,6 +6,31 @@
 <div id="postParent">
 	{{#each posts}}
 		<div class="post">
+			<h2> {{this.title}} </h2>
+			<h3 class="post-author">by {{this.authorName}} </h3>
+			<p>{{this.content}}</p>
+			<hr>
+			<div class="comments" id={{postId}}>
+				{{#each comments}}
+					<div class="comment">
+						<p> {{this.content}} </p>
+						<div class="commenter">
+							<p> by {{this.commentAuthorName}} </p>
+						</div>
+					</div>
+				{{else}}
+					<div class="comment">
+						<p> No comments! :( </p>
+					</div>
+				{{/each}}
+			</div>
+			<div class="new-comment" id="favoriteIcon" onclick="newComment('{{userId}}','{{postID}}')">
+				<p style="display: inline-block;" id="favoriteText">Post a new comment</p>
+				<i class="material-icons">comment</i>
+			</div>
+		</div>
+	{{else}}
+		<div class="post">
 			<h2>Post Title</h2>
 			<h3 class="post-author">by Author </h3>
 			<p>This is my post topic thing</p>
@@ -30,8 +55,6 @@
 				<i class="material-icons">comment</i>
 			</div>
 		</div>
-	{{else}}
-	
 	
 	{{/each}}
 </div>

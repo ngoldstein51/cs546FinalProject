@@ -40,7 +40,7 @@ function newPost(id){
 
 		postSave.innerHTML = "Add new post!";
 		postSave.setAttribute("class", "post-entries");
-		postSave.setAttribute( "onClick", "javascript: postNewPost('userId');" );
+		postSave.setAttribute( "onClick", "javascript: postNewPost('"+ id +"');" );
 
 		postContent.setAttribute("class", "post-entries");
 		postContent.setAttribute("placeholder", "Post Content");
@@ -104,7 +104,7 @@ function newComment(userId,postId){
 		newCommentInput.setAttribute( "placeholder", "Type your comment here!" );
 
 
-		newCommentSave.setAttribute( "onClick", "javascript: postNewComment('userId','postId');" );
+		newCommentSave.setAttribute( "onClick", "javascript: postNewComment('" + userId + "','" + postId + "');");
 		newCommentSave.innerHTML = "Save New Comment";
 
 		newCommentTempDiv.setAttribute("id", "newCommentTempDiv");
