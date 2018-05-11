@@ -137,6 +137,25 @@ module.exports = {
 
 	    return deletedComment;
 
+	},
+
+	deletePost: async function deletePost(postId){
+
+		const postCollection = await posts();
+	   	
+
+	   	const post = await postCollection.findOne({ _id: postId });
+	    if( post === null) throw "No Post with that id";
+
+	    const deletionInfo = await postCollection.removeOne({ _id:postId });
+
+	    if(deletionInfo.deletedCount === 0){
+	    	throw 'Could not delete post'
+	    }
+
+	    return post;
+
+
 	}
 
 };
