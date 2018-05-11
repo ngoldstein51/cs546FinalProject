@@ -1,13 +1,10 @@
 <div class="new-post">
-		<h2 id="favoriteIcon" onclick="newPost('{{id}}')">New post</h2>
+		<h2 id="favoriteIcon" onclick="newPost('{{userId}}')">New post</h2>
 </div>
 
 <hr>
-
-{{#each posts}}
-	
-{{else}}
-	<div id="postParent">
+<div id="postParent">
+	{{#each posts}}
 		<div class="post">
 			<h2>Post Title</h2>
 			<h3 class="post-author">by Author </h3>
@@ -33,7 +30,10 @@
 				<i class="material-icons">comment</i>
 			</div>
 		</div>
-	</div>
+	{{else}}
 	
-{{/each}}
+	
+	{{/each}}
+</div>
+
 <script type="text/javascript" src="/js/postHandler.js"></script>
