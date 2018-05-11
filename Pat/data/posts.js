@@ -17,7 +17,14 @@ module.exports = {
 
     	const postCollection = await posts();
 
+
+
+
     	var newPost ={};
+
+
+
+
 
 		newPost['_id'] = uuidv4();
 		newPost['title'] = title;
@@ -26,6 +33,8 @@ module.exports = {
 		newPost['tags'] = tags;
 		newPost['content'] = content;
 		newPost['comments'] = comments;
+
+
 
 		//breakpoint
 	    
@@ -104,7 +113,39 @@ module.exports = {
 
 	    return newComment;
 
-	}
+	},
 
+	deleteComment: async function deleteComment(postId, commentId){
+
+		const postCollection = await posts();
+	    const post = await postCollection.findOne({ _id: postId });
+	    if( post === null) throw "No Post with that id";
+
+	    var comments = post['comments'];
+
+	    for (var i = comments.length - 1; i >= 0; i--) {
+	    	var currComment = comments[i];
+	    	if(currComment['commentId'] === commentId){
+	    		
+	    	}
+	    }
+
+	    const updatedInfo = await postCollection.update(
+   			{ _id: postId },
+   			{	$set: 
+   				{	
+   					comments: comments
+   				}
+   			}
+		)
+
+   		if (updatedInfo.modifiedCount === 0) {
+      		throw "could not add comment successfully";
+    	}
+
+
+	    return newComment;
+
+	}
 
 };
