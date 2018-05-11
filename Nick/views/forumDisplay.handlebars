@@ -10,7 +10,7 @@
 			<h3 class="post-author">by {{this.authorName}} </h3>
 			<p>{{this.content}}</p>
 			<hr>
-			<div class="comments" id={{postId}}>
+			<div class="comments" id={{this._id}}>
 				{{#each comments}}
 					<div class="comment">
 						<p> {{this.content}} </p>
@@ -19,12 +19,12 @@
 						</div>
 					</div>
 				{{else}}
-					<div class="comment">
+					<div class="comment" id="noComments">
 						<p> No comments! :( </p>
 					</div>
 				{{/each}}
 			</div>
-			<div class="new-comment" id="favoriteIcon" onclick="newComment('{{userId}}','{{postID}}')">
+			<div class="new-comment" id="favoriteIcon" onclick="newComment('{{userId}}','{{this._id}}')">
 				<p style="display: inline-block;" id="favoriteText">Post a new comment</p>
 				<i class="material-icons">comment</i>
 			</div>

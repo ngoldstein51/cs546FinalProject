@@ -93,8 +93,9 @@ function postNewComment(userId,postId){
 
 function newComment(userId,postId){
 	if(!inProgressNewComment){
+		console.log(postId);
 		inProgressNewComment = true;
-		var commentParent = document.getElementById("comments");
+		var commentParent = document.getElementById(postId);
 		var newCommentInput = document.createElement("textarea");
 		var newCommentSave = document.createElement("button");
 		var newCommentTempDiv = document.createElement("div");
