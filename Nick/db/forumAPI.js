@@ -102,39 +102,41 @@ module.exports = {
 
 	    return newComment;
 
+	},
+
+	deleteComment: async function deleteComment(postId, commentId){
+
+		const postCollection = await posts();
+	    const post = await postCollection.findOne({ _id: postId });
+	    if( post === null) throw "No Post with that id";
+
+	    var comments = post['comments'];
+	    var deletedComment ={};
+
+	    for (var i = comments.length - 1; i >= 0; i--) {
+	    	var currComment = comments[i];
+	    	if(currComment['commentId'] === commentId){
+	    		deletedComment=currComment;
+	    		comments.splice(i,1);
+	    	}
+	    }
+
+	    const updatedInfo = await postCollection.update(
+   			{ _id: postId },
+   			{	$set: 
+   				{	
+   					comments: comments
+   				}
+   			}
+		)
+
+   		if (updatedInfo.modifiedCount === 0) {
+      		throw "could not delete comment successfully";
+    	}
+
+
+	    return deletedComment;
+
 	}
-
-	// deleteComment: async function deleteComment(postId, commentId){
-
-	// 	const postCollection = await posts();
-	//     const post = await postCollection.findOne({ _id: postId });
-	//     if( post === null) throw "No Post with that id";
-
-	//     var comments = post['comments'];
-
-	//     for (var i = comments.length - 1; i >= 0; i--) {
-	//     	var currComment = comments[i];
-	//     	if(currComment['commentId'] === commentId){
-	    		
-	//     	}
-	//     }
-
-	//     const updatedInfo = await postCollection.update(
- //   			{ _id: postId },
- //   			{	$set: 
- //   				{	
- //   					comments: comments
- //   				}
- //   			}
-	// 	)
-
- //   		if (updatedInfo.modifiedCount === 0) {
- //      		throw "could not add comment successfully";
- //    	}
-
-
-	//     return newComment;
-
-	// }
 
 };
