@@ -4,7 +4,7 @@ const uuidv4 = require('uuid/v4');
 
 module.exports = {
  
-	createPost: async function createPost(title,author,details,tags,content,comments){
+	createPost: async function createPost(title,author,content,comments){
 
     	// if (!username) throw "You must provide a username for your user";
     	// if (!password) throw "You must provide a password for your user";
@@ -17,23 +17,13 @@ module.exports = {
     	const postCollection = await posts();
 
 
-
-
     	var newPost ={};
-
-
-
-
 
 		newPost['_id'] = uuidv4();
 		newPost['title'] = title;
 		newPost['author'] = author;
-		newPost['details'] = details;
-		newPost['tags'] = tags;
 		newPost['content'] = content;
 		newPost['comments'] = comments;
-
-
 
 		//breakpoint
 	    
