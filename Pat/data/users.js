@@ -15,16 +15,22 @@ module.exports = {
 		if(typeof password !== 'string')
 			throw "password must be a string";
 
+
+
     	const userCollection = await users();
+
+	    const existingUser = await userCollection.findOne({ username: username });
+	    if(existingUser!==null)
+	    	throw "username already exists";
 
 		var newUser = {};
 
-		newTask['_id'] = uuidv4();
-		newTask['username'] = username;
-		newTask['password'] = password;
+		newUser['_id'] = uuidv4();
+		newUser['username'] = username;
+		newUser['password'] = password;
 		//breakpoint
 	    
-	    const insertInfo = await taskCollection.insertOne(newTask);
+	    const insertInfo = await userCollection.insertOne(newUser);
 	    if (insertInfo.insertedCount === 0) throw "Could not add user";
 
 	    const newId = insertInfo.insertedId;
@@ -39,9 +45,9 @@ module.exports = {
     	
     	const userCollection = await users();
 
-    	const users = await userCollection.find({}).toArray();
+    	const allUsers = await userCollection.find({}).toArray();
 
-    	return users;
+    	return allUsers;
     },
     // deleteAll: async function deleteAll(){
     	
@@ -64,45 +70,6 @@ module.exports = {
 	    if (user === null) throw "No user with that id";
 
 	    return user;
-
-	},
-
-	completeTask: async function completeTask(taskId){
-
-		if(!taskId) throw "Must provide a taskId";
-	    const taskCollection = await todoItems();
-	    const updatedInfo = await taskCollection.update(
-   			{ _id: taskId },
-   			{	$set: 
-   				{	
-   					completed: true, 
-   					completedAt: Date() 
-   				}
-   			}
-		)
-
-   		if (updatedInfo.modifiedCount === 0) {
-      		throw "could not update task successfully";
-    	}
-
-	    var task = module.exports.getTask(taskId);
-
-		return task;
-
-	},
-
-	removeTask: async function removeTask(id){
-
-		if (!id) throw "You must provide an id to search for";
-
-    	const taskCollection = await todoItems();
-    	const deletionInfo = await taskCollection.removeOne({ _id: id });
-
-    	if (deletionInfo.deletedCount === 0) {
-      		throw `Could not delete task with id of ${id}`;
-   		}
-
-   		return true;
 
 	}
 
