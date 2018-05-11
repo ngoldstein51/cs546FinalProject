@@ -270,10 +270,11 @@ if(process && process.send) process.send({done: true});
 			delete(user1.hash);
 
 			try{
-				//var allPosts = await forumAPI.getAllPosts();
-				var allPosts;
+				var allPosts = await forumAPI.getAllPosts();
+				//var allPosts;
 				res.render("forumDisplay",{
 		 			title: "Discussion page",
+		 			userId: user1,
 		 			posts: allPosts
 		 		});
 			}catch(e){
@@ -370,9 +371,13 @@ if(process && process.send) process.send({done: true});
 
 	app.get("/logout", (req, res) => {
 	 	res.clearCookie("AuthCookie");
-	 	res.render("loggedOut",{
-		 			title: "You have been logged out"
-		});
+	 	res.render("loggedOut",
+	 		{
+
+		 		layout: "main",
+		 		title: "You have been logged out"
+			}
+		);
 	});
 
 });
