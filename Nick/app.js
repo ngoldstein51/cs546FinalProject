@@ -6,6 +6,8 @@ const staticCSS = express.static(path.join(__dirname + "/public"));
 const handle = require("express-handlebars");
 const cookies=require("cookie-parser");
 const bcrypt=require("bcrypt");
+const saltRounds = 2;
+
 const userAPI = require("./db/user.js");
 
 const pokemanAPI = require("./pokemanAPI.js");
@@ -48,12 +50,8 @@ if(process && process.send) process.send({done: true});
 		try{
 			var user = await userAPI.getUserByName(req.body.username);
 			var ifValidCredentials;
-			if(req.body.password === user.password){
-				ifValidCredentials = true
-			}else{
-				ifValidCredentials = false;
-			}
-			//var ifValidCredentials = await bcrypt.compare(req.body.password, user.password);
+
+			var ifValidCredentials = await bcrypt.compare(req.body.password, user.password);
 			if(ifValidCredentials){
 				res.cookie("AuthCookie",user._id);
 				res.redirect("home");
@@ -352,7 +350,10 @@ if(process && process.send) process.send({done: true});
 		
 		// }
 		try{
-			const user = await userAPI.addUser(req.body.username,req.body.password,[]);
+			
+  			const hashedPassword = await bcrypt.hash(req.body.password, saltRounds);
+
+			const user = await userAPI.addUser(req.body.username,hashedPassword,[]);
 			res.render("index",
 				{
 					layout: "login",
