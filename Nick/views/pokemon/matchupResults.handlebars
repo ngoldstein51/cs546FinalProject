@@ -1,8 +1,9 @@
 <div class="login-padding">
-  <form action="/pokemon/getMatchup" method="POST" id="login-form">
-        <input type="text" name="pokename" class="form-control" placeholder="Pokemon Name">
-        <button type="submit" class="submit-button">Test another match!</button>
-  </form>
+	<div class="loading style-2" id="loading" style="display: none;"><div class="loading-wheel"></div></div>
+	<form action="/pokemon/getMatchup" method="POST" id="login-form">
+	    <input type="text" name="pokename" class="form-control" placeholder="Pokemon Name">
+	    <button type="submit" class="submit-button">Test another match!</button>
+	</form>
 </div>
 
 <h2 style="text-align: center;"> A good pokemon to use would be the {{title}}! </h2>
@@ -35,3 +36,4 @@
 	</div>
 </section>
 <script type="text/javascript" src="/js/addPokemonToFavorites.js"></script>
+<script type="text/javascript" src="/js/loading.js"></script>
