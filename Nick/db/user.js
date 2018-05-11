@@ -89,7 +89,7 @@ async function removeAllUsers()
 
   for(let i=0;i<userList.length;i++)
   {
-    await removeUser(userList[i]._id);
+    await removeUser(userList[i]._id); 
   }
 }
 

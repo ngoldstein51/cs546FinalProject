@@ -3,7 +3,7 @@ const posts = mongoCollections.posts;
 const uuidv4 = require('uuid/v4');
 
 module.exports = {
-
+ 
 	createPost: async function createPost(title,author,details,tags,content,comments){
 
     	// if (!username) throw "You must provide a username for your user";
