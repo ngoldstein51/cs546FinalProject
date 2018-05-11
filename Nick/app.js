@@ -284,6 +284,35 @@ if(process && process.send) process.send({done: true});
 		}
 	});
 
+	app.post("/forum/newComment", async (req, res) => {
+
+		var user = req.body.userId;
+		var commentValue = req.body.commentValue;
+		var postId = req.body.postId;
+		//var user = await getUser(req.cookies.AuthCookie);
+		// if(!user){
+		// 	res.render("notLoggedIn",{
+		//  			title: "Sorry you are not logged in"
+		//  	});
+		// }else{
+		// 	user1=Object.assign({},user);
+		// 	delete(user1.hash);
+
+		// 	try{
+		// 		//var allPosts = await forumAPI.getAllPosts();
+		// 		var allPosts;
+		// 		res.render("forumDisplay",{
+		//  			title: "Discussion page",
+		//  			posts: allPosts
+		//  		});
+		// 	}catch(e){
+		// 		res.render("notLoggedIn",{
+		// 			title: "There was an error loading the posts, please try again"
+		// 		});
+		// 	}
+		// }
+	});
+
 	app.get("/create-account", (req, res) => {
 		res.render("create-account",
 			{
