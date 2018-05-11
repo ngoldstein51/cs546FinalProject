@@ -9,9 +9,15 @@ function loadXMLDoc(id,pokemonName){
 		if (this.readyState == 4 && this.status == 200) {
 			console.log("It worked!");
 			alert("Pokemon has successfully been added to your favorites!");
+			document.getElementById("favoriteText").innerHTML = "This is one of your favorite pokemon!";
+			document.getElementById("favoriteIcon").innerHTML = "star";
+			document.getElementById("favoriteIcon").setAttribute( "onClick", "javascript:;" );
 			//window.location.replace("/");
+		}else if(this.readyState == 4 && this.status == 400){
+			alert("There was a problem adding this pokemon to your favorites. Please try again, or refresh the page.");
 		}else{
-			console.log("We have a problem! " + this.readyState);
+			//not done yet
+			//console.log("Hello " + this.status + " and  " + this.readyState);
 		}
 	};
 

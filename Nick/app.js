@@ -85,10 +85,11 @@ if(process && process.send) process.send({done: true});
 		}else{
 			user1=Object.assign({},user);
 			delete(user1.password);
+			console.log(user1);
 			res.render("userDisplay",{
 		 			title: "User info",
 		 			username: user1.username,
-		 			favorite: user1.favorites
+		 			favorites: user1.favorites
 		 	});
 			res.status(403);
 		}
@@ -127,6 +128,8 @@ if(process && process.send) process.send({done: true});
 			user1=Object.assign({},user);
 			delete(user1.hash);
 
+			console.log(user1);
+
 			//req.params.studentId
 			pokemanAPI.getPokemonByName(req.body.pokename, function(error, result){
 				if(error){
@@ -146,7 +149,8 @@ if(process && process.send) process.send({done: true});
 			 			weight: Math.ceil((result.weight/(10*0.45359237))),
 			 			moves: result.moves,
 			 			types: result.types,
-			 			sprite: result.sprite
+			 			sprite: result.sprite,
+			 			isFavorite: user1.favorites.includes(result.name) ? true : false
 				 	});
 					res.status(403);
 				}
@@ -217,18 +221,13 @@ if(process && process.send) process.send({done: true});
 
 	app.post("/pokemon/addToFavorites", async (req, res) => {
 		try{
-			console.log(user);
 			var user = await userAPI.getUser(req.body.id);
 			var updatedList = user.favorites;
 			updatedList.push(req.body.pokemonName);
-			console.log(typeof updatedList);
-			console.log(updatedList);
 			var updatedUser = await userAPI.updateUserFav(req.body.id, updatedList);
-
-			
-			console.log(updatedUser);
+			res.status(200).end();
 		}catch(e){
-			console.log("There was an error do some status code thing here " + e);
+			res.status(400).end();
 		}
 	});
 	
