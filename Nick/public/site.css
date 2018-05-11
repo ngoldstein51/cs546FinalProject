@@ -165,6 +165,46 @@ i {
   padding: 40px;
 }
 
+.new-post {
+  margin-left: 75%;
+}
+
+.post { 
+  padding: 40px;
+  border-style: double;
+  border-radius: 5px;
+  /*padding: 20px;*/
+  margin: 10px;
+}
+
+.post-author {
+  font-size: 15px;
+}
+
+.post-entries {
+  margin: 10px;
+  display: block;
+}
+
+.comments {
+  margin-left: 10%;
+}
+
+.commenter {
+  margin-left: 10%;
+  font-size: 12px;
+}
+
+.new-comment { 
+  overflow: hidden;
+  cursor: pointer;
+  width: 200px;
+}
+
+.new-comment > #favoriteText { 
+  text-decoration: underline;
+}
+
 
 /*LOADING ANIMATION*/
 

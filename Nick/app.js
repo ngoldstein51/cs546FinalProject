@@ -9,6 +9,7 @@ const bcrypt=require("bcrypt");
 const userAPI = require("./db/user.js");
 
 const pokemanAPI = require("./pokemanAPI.js");
+const forumAPI = require("./db/forumAPI.js");
 
 app.use("/",staticCSS);
 app.use(bodyParser.json());
@@ -267,11 +268,19 @@ if(process && process.send) process.send({done: true});
 		}else{
 			user1=Object.assign({},user);
 			delete(user1.hash);
-			res.render("userDisplay",{
-		 			title: "User info",
-		 			user: JSON.stringify(user1)
-		 	});
-			res.status(403);
+
+			try{
+				//var allPosts = await forumAPI.getAllPosts();
+				var allPosts;
+				res.render("forumDisplay",{
+		 			title: "Discussion page",
+		 			posts: allPosts
+		 		});
+			}catch(e){
+				res.render("notLoggedIn",{
+					title: "There was an error loading the posts, please try again"
+				});
+			}
 		}
 	});
 

@@ -1,7 +1,6 @@
-const mongoCollections = require("./mongoCollections");
+const mongoCollections = require("./mongoCollections.js");
 const posts = mongoCollections.posts;
 const uuidv4 = require('uuid/v4');
-
 
 module.exports = {
 
@@ -34,7 +33,7 @@ module.exports = {
 
 	    const newId = insertInfo.insertedId;
 
-	    const post = await this.getPostById(newId);
+	    var post = await this.getPostById(newId);
 	    return post;
 
 
@@ -100,11 +99,6 @@ module.exports = {
    		if (updatedInfo.modifiedCount === 0) {
       		throw "could not add comment successfully";
     	}
-
-
 	    return newComment;
-
 	}
-
-
 };

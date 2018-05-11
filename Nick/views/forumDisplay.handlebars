@@ -1,0 +1,39 @@
+<div class="new-post">
+		<h2 id="favoriteIcon" onclick="newPost('{{id}}')">New post</h2>
+</div>
+
+<hr>
+
+{{#each posts}}
+	
+{{else}}
+	<div id="postParent">
+		<div class="post">
+			<h2>Post Title</h2>
+			<h3 class="post-author">by Author </h3>
+			<p>This is my post topic thing</p>
+			<hr>
+			<div class="comments" id="comments">
+				<div class="comment">
+					<p> This is my comment </p>
+					<div class="commenter">
+						by Daniel
+					</div>
+				</div>
+				<div class="comment">
+					<p> This is 2nd my comment </p>
+					<div class="commenter">
+						by Billy
+					</div>
+				</div>
+			</div>
+			<hr>
+			<div class="new-comment" id="favoriteIcon" onclick="newComment('{{id}}')">
+				<p style="display: inline-block;" id="favoriteText">Post a new comment</p>
+				<i class="material-icons">comment</i>
+			</div>
+		</div>
+	</div>
+	
+{{/each}}
+<script type="text/javascript" src="/js/postHandler.js"></script>
