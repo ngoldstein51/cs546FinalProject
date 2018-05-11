@@ -178,7 +178,9 @@ if(process && process.send) process.send({done: true});
 			 			weight: Math.ceil((result.weight/(10*0.45359237))),
 			 			moves: result.moves,
 			 			types: result.types,
-			 			sprite: result.sprite
+			 			sprite: result.sprite,
+			 			name: result.name,
+			 			isFavorite: user1.favorites.includes(result.name) ? true : false
 				 	});
 				}else if(!error && !result){
 					res.render("notLoggedIn",{
