@@ -347,7 +347,7 @@ if(process && process.send) process.send({done: true});
 			if(pass1!==pass2){
 				throw "Error: passwords must match!";
 			}
-			
+
   			const hashedPassword = await bcrypt.hash(req.body.password, saltRounds);
 
 			const user = await userAPI.addUser(req.body.username,hashedPassword,[]);
@@ -372,7 +372,7 @@ if(process && process.send) process.send({done: true});
 	 	res.render("loggedOut",
 	 		{
 
-		 		layout: "main",
+		 		layout: "login",
 		 		title: "You have been logged out"
 			}
 		);

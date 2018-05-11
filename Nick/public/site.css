@@ -201,7 +201,7 @@ i {
   width: 200px;
 }
 
-.new-comment > #favoriteText { 
+.new-comment > .underline-text { 
   text-decoration: underline;
 }
 
