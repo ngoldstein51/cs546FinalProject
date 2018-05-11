@@ -102,7 +102,7 @@ const getPokemonMatchup = function(name,callback){
 						var chosen_pokemon;
 						var matchup;
 
-						async.eachOfLimit(res, 1, function(obj,fuckme,everyCallback){
+						async.eachOfLimit(res, 1, function(obj,fme,everyCallback){
 							console.log("This is the obj :: "  + obj.name);
 							P.getPokemonByName(obj.name).then(function(againstTypeResponse){
 								console.log("This is my pokemon name ! " + againstTypeResponse.name);
@@ -167,7 +167,6 @@ const getPokemonMatchup = function(name,callback){
 			callback(error);
 		});
 
-		//callback("FUCK");
 	}
 }
 
