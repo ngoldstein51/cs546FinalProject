@@ -51,6 +51,10 @@ body > nav > div > img {
   width: 45%;
 }
 
+i { 
+  cursor: pointer;
+}
+
 #login-image { 
   margin: auto;
   margin-left: 27%;
@@ -160,6 +164,7 @@ body > nav > div > img {
   display: inline-block;
   padding: 40px;
 }
+
 
 /*LOADING ANIMATION*/
 

@@ -1,5 +1,17 @@
 <section class="display-pokemon-section">
 	<div class="display-pokemon">
+		{{#if isFavorite}}
+			<div>
+			    <p style="display: inline-block;">This is one of your favorite pokemon!</p>
+			    <i class="material-icons">star</i>
+			</div>
+		{{else}}
+			<div>
+			    <p style="display: inline-block;">Add this pokemon to my favorites!</p>
+			    <i class="material-icons" onclick="addToFavorite('{{name}}')">star_border</i>
+			</div>
+		{{/if}}
+		
 		<h3> {{title}} </h3>
 		<h3> Height:: {{height}} inches </h3>
 		<h3> Weight:: {{weight}} lbs </h3>
@@ -15,3 +27,4 @@
 		<img src="{{sprite}}"/>
 	</div>
 </section>
+<script type="text/javascript" src="/js/addPokemonToFavorites.js"></script>

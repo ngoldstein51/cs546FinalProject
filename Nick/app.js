@@ -140,6 +140,7 @@ if(process && process.send) process.send({done: true});
 					//console.log(result);
 					res.render("pokemon/pokemonView",{
 			 			title: "Pokemon :: " + result.name,
+			 			name: result.name,
 			 			user: JSON.stringify(user1),
 			 			height: Math.ceil((result.height*10)/2.54) ,
 			 			weight: Math.ceil((result.weight/(10*0.45359237))),
@@ -214,6 +215,23 @@ if(process && process.send) process.send({done: true});
 		}
 	});
 
+	app.post("/pokemon/addToFavorites", async (req, res) => {
+		try{
+			console.log(user);
+			var user = await userAPI.getUser(req.body.id);
+			var updatedList = user.favorites;
+			updatedList.push(req.body.pokemonName);
+			console.log(typeof updatedList);
+			console.log(updatedList);
+			var updatedUser = await userAPI.updateUserFav(req.body.id, updatedList);
+
+			
+			console.log(updatedUser);
+		}catch(e){
+			console.log("There was an error do some status code thing here " + e);
+		}
+	});
+	
 	app.get("/matchup", async (req, res) => {
 		try{
 			var user = await getUser(req.cookies.AuthCookie);
