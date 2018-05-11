@@ -9,7 +9,7 @@ async function addUser(username, password, favorites)
 
   const UserCollection = await users();
 
-  const isExistingUser = await userCollection.findOne({ username: username });
+  const isExistingUser = await UserCollection.findOne({ username: username });
   if(isExistingUser!==null)
       throw "username already exists";
 

@@ -61,7 +61,8 @@ if(process && process.send) process.send({done: true});
 						layout: "login",
 						title: "Retry!",
 						error: "Error, incorrect login info"
-					});
+					}
+				);
 			}
 		}catch(e){
 			res.render("index", 
@@ -310,6 +311,17 @@ if(process && process.send) process.send({done: true});
 		// 		});
 		// 	}
 		// }
+	});
+
+	app.post("/forum/newPost", async (req, res) => {
+
+		var user = req.body.userId;
+		var commentValue = req.body.postTitle;
+		var postId = req.body.postContent;
+
+		console.log("I am inside of new comment");
+		console.log(user);
+
 	});
 
 	app.get("/create-account", (req, res) => {
