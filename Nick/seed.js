@@ -1,13 +1,16 @@
 const forumAPI = require("./db/forumAPI.js");
 const userAPI = require("./db/user.js");
+const bcrypt=require("bcrypt");
 
-function addTestUserToDb(username, password, favorites){
+async function addTestUserToDb(username, password, favorites){
 	try{
-		var testUser = await userAPI.addUser(username,password,favorites);
+		const hashedPassword = await bcrypt.hash(password, saltRounds);
+		var testUser = await userAPI.addUser(username,hashedPassword,favorites);
 	}catch(e){
 		throw "There was an error with seeding the database! " + e
 	}
 }
 
-addTestUserToDb("admin","password", ["pikachu"]);
+addTestUserToDb("admin2","password", ["pikachu"]);
+
 
