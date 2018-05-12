@@ -10,7 +10,7 @@ const getPokemonByName = function(name,callback){
 		callback("Error! Not a valid pokemon!",null);
 	}else{
 		P.getPokemonByName(name).then(function(response) {
-
+			//console.log(response);
 			//callback(null, );
 			var the_moves = [];
 			var iterator = 0;
@@ -43,7 +43,7 @@ const getPokemonByName = function(name,callback){
 
 const getFullPokemanList = function(callback){
 	var interval = {
-	    limit: 151
+	    limit: 959
 	};
 
 	P.getPokemonsList(interval).then(function(response) {
