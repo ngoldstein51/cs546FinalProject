@@ -72,10 +72,7 @@ module.exports = {
 
 	createComment: async function createComment(postId, author, content){
 
-		console.log("Made it here");
-		console.log(author);
 		var user1 = await userAPI.getUser(author);
-		console.log("Also made it here " + user1.username);
 
 		const postCollection = await posts();
 	    const post = await postCollection.findOne({ _id: postId });

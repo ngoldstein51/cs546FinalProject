@@ -86,7 +86,7 @@ if(process && process.send) process.send({done: true});
 		}else{
 			user1=Object.assign({},user);
 			delete(user1.password);
-			console.log(user1);
+			//console.log(user1);
 			res.render("userDisplay",{
 		 			title: "User info",
 		 			username: user1.username,
@@ -247,7 +247,7 @@ if(process && process.send) process.send({done: true});
 				//var allPosts;
 				// console.log(user1.id);
 				// console.log(user1._id);
-				console.log(allPosts);
+				//console.log(allPosts);
 
 				res.render("forumDisplay",{
 		 			title: "Discussion page",
@@ -290,11 +290,6 @@ if(process && process.send) process.send({done: true});
 			console.log("There was an error! " + e);
 			res.status(400).end();
 		}
-
-		console.log("I am inside of new post");
-		console.log(user);
-		console.log(postTitle);
-		console.log(postContent);
 
 	});
 

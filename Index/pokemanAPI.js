@@ -96,26 +96,26 @@ const getPokemonMatchup = function(name,callback){
 					if(!error){
 						let res=shuffleAlg.shuffle(result);
 						let againstType=typeDict[the_types[0]];
-						console.log("MY name is jeff");
-						console.log(res);
-						console.log(againstType);
+						// console.log("MY name is jeff");
+						// console.log(res);
+						// console.log(againstType);
 						var chosen_pokemon;
 						var matchup;
 
 						async.eachOfLimit(res, 1, function(obj,fme,everyCallback){
-							console.log("This is the obj :: "  + obj.name);
+							//console.log("This is the obj :: "  + obj.name);
 							P.getPokemonByName(obj.name).then(function(againstTypeResponse){
-								console.log("This is my pokemon name ! " + againstTypeResponse.name);
+								//console.log("This is my pokemon name ! " + againstTypeResponse.name);
 								let the_possible_types = []
 								let iterator = 0;
 								for (var i = againstTypeResponse.types.length - 1; i >= 0; i--) {
 									the_possible_types[iterator] = againstTypeResponse.types[i].type.name;
 									iterator++;
 								}
-								console.log("This is the posisble types");
-								console.log(the_possible_types);
+								// console.log("This is the posisble types");
+								// console.log(the_possible_types);
 								if(the_possible_types.includes(againstType)){
-									console.log("I found something !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!" + obj.name)
+									//console.log("I found something !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!" + obj.name)
 									chosen_pokemon = obj.name;
 
 									var the_matchup_moves = [];
@@ -136,7 +136,7 @@ const getPokemonMatchup = function(name,callback){
 									//matchup_list.push(matchup);
 									return everyCallback(matchup);
 								}else{
-									console.log("Continute because I didnt find anything")
+									//console.log("Continute because I didnt find anything")
 									return everyCallback();
 								}
 								//return everyCallback();
@@ -154,13 +154,13 @@ const getPokemonMatchup = function(name,callback){
 							//callback(null,null);
 						});
 						 // did not find a matchup
-						console.log("I am stuck here");
+						//console.log("I am stuck here");
 					}else{
 						callback(error,null);
 					}
 				});
 			}catch(e){
-				console.log("I am here!");
+				//console.log("I am here!");
 				callback(e,null);
 			}
 		}).catch(function(error) {
