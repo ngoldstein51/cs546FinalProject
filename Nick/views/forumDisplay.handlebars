@@ -6,14 +6,20 @@
 <div id="postParent">
 	{{#each posts}}
 		<div class="post">
-			<h2> {{this.title}} </h2>
+			<div>
+				<h2 style="display: inline-block;"> {{this.title}} </h2>
+				<i class="material-icons" onclick="removePost('{{this.author}}','{{../userId}}','{{this._id}}')">clear</i>
+			</div>
 			<h3 class="post-author">by {{this.authorName}} </h3>
 			<p>{{this.content}}</p>
 			<hr>
 			<div class="comments" id={{this._id}}>
 				{{#each comments}}
 					<div class="comment">
-						<p> {{this.content}} </p>
+						<div>
+							<p style="display: inline-block;"> {{this.content}} </p>
+							<i class="material-icons" onclick="removeComment('{{../this._id}}','{{../../userId}}','{{this.author}}','{{this.commentId}}')">clear</i>
+						</div>
 						<div class="commenter">
 							<p> by {{this.authorName}} </p>
 						</div>

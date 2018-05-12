@@ -325,6 +325,33 @@ if(process && process.send) process.send({done: true});
 
 	});
 
+	app.post("/forum/removePost", async (req, res) => {
+		var postId = req.body.postId;
+
+		try{
+			var removedPost = await forumAPI.deletePost(postId);
+			res.status(200).end();
+		}catch(e){
+			console.log("There was an error! " + e);
+			res.status(400).end();
+		}
+
+	});
+
+	app.post("/forum/removeComment", async (req, res) => {
+		var postId = req.body.postId;
+		var commentId = req.body.commentId;
+
+		try{
+			var removedComment = await forumAPI.deleteComment(postId,commentId);
+			res.status(200).end();
+		}catch(e){
+			console.log("There was an error! " + e);
+			res.status(400).end();
+		}
+
+	});
+
 	app.get("/create-account", (req, res) => {
 		res.render("create-account",
 			{

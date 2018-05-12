@@ -119,3 +119,56 @@ function newComment(userId,postId){
 		commentParent.append(newCommentTempDiv);
 	}
 }
+
+function removePost(authorId,userId,postId){
+	if(authorId===userId){
+		var xhttp = new XMLHttpRequest();
+		xhttp.onreadystatechange=function() {
+			if (this.readyState == 4 && this.status == 200) {
+				console.log("It worked!");
+				alert("Post has successfully been deleted!");
+				window.location.replace("/forum");
+			}else if(this.readyState == 4 && this.status == 400){
+				alert("There was a problem deleting this post. Please try again, or refresh the page.");
+			}else{
+				//not done yet
+				//console.log("Hello " + this.status + " and  " + this.readyState);
+			}
+		};
+
+	    xhttp.open("POST", "/forum/removePost", true);
+		xhttp.setRequestHeader("Content-type", "application/json");
+		var myData = {};
+		myData.postId = postId;
+		xhttp.send(JSON.stringify(myData));
+	}else{
+		alert("You do not have access to delete this post! Only the owner can delete the post.");
+	}
+}
+
+function removeComment(postId,userId,authorId,commentId){
+	if(userId === authorId){
+		var xhttp = new XMLHttpRequest();
+		xhttp.onreadystatechange=function() {
+			if (this.readyState == 4 && this.status == 200) {
+				console.log("It worked!");
+				alert("Comment has successfully been deleted!");
+				window.location.replace("/forum");
+			}else if(this.readyState == 4 && this.status == 400){
+				alert("There was a problem deleting this comment. Please try again, or refresh the page.");
+			}else{
+				//not done yet
+				//console.log("Hello " + this.status + " and  " + this.readyState);
+			}
+		};
+
+	    xhttp.open("POST", "/forum/removeComment", true);
+		xhttp.setRequestHeader("Content-type", "application/json");
+		var myData = {};
+		myData.postId = postId;
+		myData.commentId = commentId;
+		xhttp.send(JSON.stringify(myData));
+	}else{
+		alert("You do not have access to delete this comment! Only the owner can delete the comment.");
+	}
+}
