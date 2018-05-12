@@ -92,7 +92,7 @@ if(process && process.send) process.send({done: true});
 		 			username: user1.username,
 		 			favorites: user1.favorites
 		 	});
-			res.status(403);
+			//res.status(403);
 		}
 	});
 
@@ -113,7 +113,7 @@ if(process && process.send) process.send({done: true});
 			 			user: JSON.stringify(user1),
 			 			pokemon: result
 			 	});
-				res.status(403);
+				//res.status(403);
 			});
 		}
 	});
@@ -128,8 +128,6 @@ if(process && process.send) process.send({done: true});
 		}else{
 			user1=Object.assign({},user);
 			delete(user1.hash);
-
-			console.log(user1);
 
 			//req.params.studentId
 			pokemanAPI.getPokemonByName(req.body.pokename, function(error, result){
@@ -153,16 +151,13 @@ if(process && process.send) process.send({done: true});
 			 			sprite: result.sprite,
 			 			isFavorite: user1.favorites.includes(result.name) ? true : false
 				 	});
-					res.status(403);
+					//res.status(403);
 				}
 			});
-			
 		}
 	});
 
 	app.post("/pokemon/getMatchup", async (req, res) => {
-		console.log("I am in getMatchup")
-		//var user = await getUser(req.cookies.AuthCookie);
 		if(false){
 			res.render("notLoggedIn",{
 		 		title: "Sorry you are not logged in"
@@ -197,28 +192,6 @@ if(process && process.send) process.send({done: true});
 				}
 				//matchupPokemon=result.name;
 			});
-			//req.params.studentId
-			// pokemanAPI.getPokemonByName(req.body.pokename, function(error, result){
-			// 	if(error){
-			// 		//do an error
-			// 		console.log(error);
-			// 		res.render("pokemon/matchup",{
-			//  			title: "Error: Not a valid pokemon!"
-			// 	 	});
-			// 	}else{
-			// 		//render the correct pokemon screen
-			// 		res.render("pokemon/matchupResults",{
-			//  			title: "Pokemon :: " + result.name,
-			//  			user: JSON.stringify(user1),
-			//  			height: Math.ceil((result.height*10)/2.54) ,
-			//  			weight: Math.ceil((result.weight/(10*0.45359237))),
-			//  			moves: result.moves,
-			//  			types: result.types,
-			//  			sprite: result.sprite
-			// 	 	});
-			// 		res.status(403);
-			// 	}
-			// });
 		}
 	});
 
